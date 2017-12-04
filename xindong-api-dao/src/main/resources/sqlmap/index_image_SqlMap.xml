@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="index_image" >
+  <resultMap id="IndexImageResult" class="com.xindong.api.domain.IndexImage" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="image_name" property="imageName" jdbcType="VARCHAR" />
+    <result column="skip_url" property="skipUrl" jdbcType="VARCHAR" />
+    <result column="sort_number" property="sortNumber" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="url_type" property="urlType" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	id, image_url, image_name, skip_url, sort_number, created, modified, yn, type, url_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="IndexImageResult" parameterClass="com.xindong.api.domain.IndexImage" >
+    select <include refid="index_image.queryField" />
+    from index_image
+    where id = #id:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.IndexImage" >
+    delete from index_image
+    where id = #id:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.IndexImage" >
+    insert into index_image (id, image_url, image_name, skip_url, sort_number, created, modified,
+      yn, type, url_type)
+    values (#id:INTEGER#, #imageUrl:VARCHAR#, #imageName:VARCHAR#, #skipUrl:VARCHAR#,
+      #sortNumber:INTEGER#, now(),now(), 1, #type:INTEGER#,
+      #urlType:INTEGER#)
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="contactId">
+			<![CDATA[SELECT @@IDENTITY AS contact_id ]]>
+	  </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.IndexImage" >
+    update index_image
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="imageUrl" >
+        image_url = #imageUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="imageName" >
+        image_name = #imageName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="skipUrl" >
+        skip_url = #skipUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNumber" >
+        sort_number = #sortNumber:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="urlType" >
+        url_type = #urlType:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="id" >
+        id = #id#
+      </isNotNull>
+      <isNotNull prepend="and" property="imageUrl" >
+        image_url = 'imageUrl'
+      </isNotNull>
+      <isNotNull prepend="and" property="imageName" >
+        image_name = 'imageName'
+      </isNotNull>
+       <isNotNull prepend="and" property="sortNumber" >
+        sort_number = #sortNumber#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        yn = #yn#
+      </isNotNull>
+       <isNotNull prepend="and" property="type" >
+        type = #type#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.IndexImage" resultMap="IndexImageResult" >
+    select <include refid="index_image.queryField" />
+    from index_image
+    <include refid="index_image.condition" />
+    order by sort_number asc
+  </select>
+</sqlMap>

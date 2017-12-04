@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="payment_info" >
+  <resultMap id="PaymentInfoResult" class="com.xindong.api.domain.PaymentInfo" >
+    <result column="payment_id" property="paymentId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_pay_type" property="orderPayType" jdbcType="INTEGER" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="payment_info_type" property="paymentInfoType" jdbcType="INTEGER" />
+    <result column="payment_money" property="paymentMoney" jdbcType="DECIMAL" />
+    <result column="payment_number" property="paymentNumber" jdbcType="VARCHAR" />
+    <result column="busi_partner" property="busiPartner" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="VARCHAR" />
+    <result column="valid_order" property="validOrder" jdbcType="INTEGER" />
+    <result column="settle_date" property="settleDate" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+     payment_id, order_id, order_pay_type, pay_type, payment_info_type, payment_money,
+      payment_number, busi_partner, order_time, valid_order, settle_date, bank_name, bank_code,
+      created, modified, openid
+   </sql>
+  <select id="selectByPrimaryKey" resultMap="PaymentInfoResult" parameterClass="com.xindong.api.domain.PaymentInfo" >
+    select <include refid="payment_info.queryField" /> 
+    from payment_info
+    where payment_id = #paymentId:INTEGER#
+  </select>
+ 
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.PaymentInfo" >
+    delete from payment_info
+    where payment_id = #paymentId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.PaymentInfo" >
+    insert into payment_info (payment_id, order_id, order_pay_type, pay_type, payment_info_type,
+      payment_money, payment_number, busi_partner, order_time, valid_order, settle_date, bank_name,
+      bank_code, created, modified, openid)
+    values (#paymentId:INTEGER#, #orderId:INTEGER#, #orderPayType:INTEGER#, #payType:INTEGER#,
+      #paymentInfoType:INTEGER#, #paymentMoney:DECIMAL#, #paymentNumber:VARCHAR#,
+      #busiPartner:VARCHAR#, #orderTime:VARCHAR#, #validOrder:INTEGER#, #settleDate:VARCHAR#,
+      #bankName:VARCHAR#, #bankCode:VARCHAR#, now(), now(),
+      #openid:VARCHAR#)
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.PaymentInfo" >
+    update payment_info
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="orderId" >
+        order_id = #orderId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="orderPayType" >
+        order_pay_type = #orderPayType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="payType" >
+        pay_type = #payType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="paymentInfoType" >
+        payment_info_type = #paymentInfoType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="paymentMoney" >
+        payment_money = #paymentMoney:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="paymentNumber" >
+        payment_number = #paymentNumber:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="busiPartner" >
+        busi_partner = #busiPartner:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="orderTime" >
+        order_time = #orderTime:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="validOrder" >
+        valid_order = #validOrder:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="settleDate" >
+        settle_date = #settleDate:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bankName" >
+        bank_name = #bankName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bankCode" >
+        bank_code = #bankCode:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="openid" >
+        openid = #openid:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where payment_id = #paymentId:INTEGER#
+  </update>
+  
+</sqlMap>

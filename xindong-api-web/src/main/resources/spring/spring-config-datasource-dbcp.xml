@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName" default-lazy-init="true">
+
+	<!-- 数据库的配置 -->
+	<bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- 设置查询超时为10秒-->
+		<property name="validationQueryTimeout" value="10" />
+		<!-- 最大连接数 -->
+		<property name="maxActive" value="300" />
+        <property name="initialSize" value="2" />
+        <property name="maxWait" value="25000" />
+        <!-- 最大空闲 -->
+        <property name="maxIdle" value="30" />
+        <property name="minIdle" value="1" />
+        <property name="testOnBorrow" value="false"></property>
+        <property name="testWhileIdle" value="true"></property> 
+        <property name="validationQuery" value="select 1"></property>
+        <property name="timeBetweenEvictionRunsMillis"><value>300000</value></property>  
+        <property name="numTestsPerEvictionRun"><value>10</value></property>
+        <property name="minEvictableIdleTimeMillis" value="300000"></property> 
+	</bean>
+	
+	<!-- 数据源的配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${vip.mysql.wr.jdbc.url}" />
+		<property name="username" value="${vip.mysql.wr.jdbc.username}" />
+		<property name="password" value="${vip.mysql.wr.jdbc.password}" />
+		<property name="validationQuery" value="SELECT 1" />
+        <property name="testOnBorrow" value="true"/>
+	</bean>
+	
+	<!-- ibatis的配置 -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap/sqlmap-config.xml" />
+	</bean>
+</beans>

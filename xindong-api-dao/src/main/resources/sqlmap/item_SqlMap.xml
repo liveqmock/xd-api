@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="item" >
+  <resultMap id="ItemResult" class="com.xindong.api.domain.Item" >
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="item_intro1" property="itemIntro1" jdbcType="VARCHAR" />
+    <result column="item_intro2" property="itemIntro2" jdbcType="VARCHAR" />
+    <result column="item_intro3" property="itemIntro3" jdbcType="VARCHAR" />
+    <result column="item_type" property="itemType" jdbcType="INTEGER" />
+    <result column="destination_id1" property="destinationId1" jdbcType="INTEGER" />
+    <result column="destination_id2" property="destinationId2" jdbcType="INTEGER" />
+    <result column="subject_id1" property="subjectId1" jdbcType="INTEGER" />
+    <result column="subject_id2" property="subjectId2" jdbcType="INTEGER" />
+    <result column="date_id1" property="dateId1" jdbcType="INTEGER" />
+    <result column="date_id2" property="dateId2" jdbcType="INTEGER" />
+    <result column="origin_id1" property="originId1" jdbcType="INTEGER" />
+    <result column="origin_id2" property="originId2" jdbcType="INTEGER" />
+    <result column="destination_name1" property="destinationName1" jdbcType="VARCHAR" />
+    <result column="destination_name2" property="destinationName2" jdbcType="VARCHAR" />
+    <result column="subject_name1" property="subjectName1" jdbcType="VARCHAR" />
+    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+    <result column="item_origin_name1" property="itemOriginName1" jdbcType="VARCHAR" />
+    <result column="heart_score" property="heartScore" jdbcType="DECIMAL" />
+    <result column="quality_score" property="qualityScore" jdbcType="DECIMAL" />
+    <result column="challenge_score" property="challengeScore" jdbcType="DECIMAL" />
+    <result column="vender_user_id" property="venderUserId" jdbcType="INTEGER" />
+    <result column="flag_id" property="flagId" jdbcType="INTEGER" />
+    <result column="supplier_flag_id" property="supplierFlagId" jdbcType="VARCHAR" />
+    <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+    <result column="item_status" property="itemStatus" jdbcType="INTEGER" />
+    <result column="item_image" property="itemImage" jdbcType="VARCHAR" />
+    <result column="item_image_min" property="itemImageMin" jdbcType="VARCHAR" />
+    <result column="if_deposit" property="ifDeposit" jdbcType="INTEGER" />
+    <result column="item_flag" property="itemFlag" jdbcType="INTEGER" />
+    <result column="useful_count" property="usefulCount" jdbcType="INTEGER" />
+    <result column="forword_count" property="forwordCount" jdbcType="INTEGER" />
+    <result column="share_web_url" property="shareWebUrl" jdbcType="VARCHAR" />
+    <result column="share_summary" property="shareSummary" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR" />
+    <result column="qrcode_img_url" property="qrcodeImgUrl" jdbcType="VARCHAR" />
+    <result column="online_date" property="onlineDate" jdbcType="TIMESTAMP" />
+    <result column="offline_date" property="offlineDate" jdbcType="TIMESTAMP" />
+    <result column="customStatus" property="customstatus" jdbcType="INTEGER" />
+    <result column="customDesc" property="customdesc" jdbcType="VARCHAR" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="destination_json1" property="destinationJson1" jdbcType="VARCHAR" />
+    <result column="destination_json2" property="destinationJson2" jdbcType="VARCHAR" />
+    <result column="subject_json1" property="subjectJson1" jdbcType="VARCHAR" />
+    <result column="subject_json2" property="subjectJson2" jdbcType="VARCHAR" />
+    <result column="supplierDesc" property="supplierdesc" jdbcType="VARCHAR" />
+    <result column="most_num" property="mostNum" jdbcType="INTEGER" />
+    <result column="least_num" property="leastNum" jdbcType="INTEGER" />
+    <result column="music_web_url" property="musicWebUrl" jdbcType="VARCHAR" />
+    <result column="music_web_author" property="musicWebAuthor" jdbcType="VARCHAR" />
+    <result column="h5_share_web_url" property="h5ShareWebUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	 item_id, item_name, item_intro1, item_intro2, item_intro3, item_type, destination_id1,
+      destination_id2, subject_id1, subject_id2, date_id1, date_id2, origin_id1, origin_id2,
+      destination_name1, destination_name2, subject_name1, subject_name, item_origin_name1,
+      heart_score, quality_score, challenge_score, vender_user_id, flag_id, supplier_flag_id,
+      supplier_id, item_status, item_image, item_image_min, if_deposit, item_flag, useful_count,
+      forword_count, share_web_url, share_summary, flag, qrcode_url, qrcode_img_url, online_date,
+      offline_date, customStatus, customDesc, yn, created, modified, 
+      destination_json1,destination_json2, subject_json1, subject_json2, supplierDesc, most_num, least_num,
+      music_web_url,music_web_author,h5_share_web_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ItemResult" parameterClass="com.xindong.api.domain.Item" >
+    select <include refid="item.queryField" />
+    from item
+    where item_id = #itemId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.Item" >
+    delete from item
+    where item_id = #itemId:INTEGER#
+  </delete>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.Item" >
+    update item
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="itemName" >
+        item_name = #itemName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="itemIntro1" >
+        item_intro1 = #itemIntro1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="itemIntro2" >
+        item_intro2 = #itemIntro2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="itemIntro3" >
+        item_intro3 = #itemIntro3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="itemType" >
+        item_type = #itemType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="destinationId1" >
+        destination_id1 = #destinationId1:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="destinationId2" >
+        destination_id2 = #destinationId2:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="subjectId1" >
+        subject_id1 = #subjectId1:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="subjectId2" >
+        subject_id2 = #subjectId2:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="dateId1" >
+        date_id1 = #dateId1:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="dateId2" >
+        date_id2 = #dateId2:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="originId1" >
+        origin_id1 = #originId1:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="originId2" >
+        origin_id2 = #originId2:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="destinationName1" >
+        destination_name1 = #destinationName1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="destinationName2" >
+        destination_name2 = #destinationName2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="subjectName1" >
+        subject_name1 = #subjectName1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="subjectName" >
+        subject_name = #subjectName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="itemOriginName1" >
+        item_origin_name1 = #itemOriginName1:VARCHAR#
+      </isNotNull>
+     <isNotNull prepend="," property="heartScore" >
+        heart_score = #heartScore:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="qualityScore" >
+        quality_score = #qualityScore:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="challengeScore" >
+        challenge_score = #challengeScore:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="venderUserId" >
+        vender_user_id = #venderUserId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="flagId" >
+        flag_id = #flagId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="supplierFlagId" >
+        supplier_flag_id = #supplierFlagId:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="supplierId" >
+        supplier_id = #supplierId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemStatus" >
+        item_status = #itemStatus:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemImage" >
+        item_image = #itemImage:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="itemImageMin" >
+        item_image_min = #itemImageMin:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="ifDeposit" >
+        if_deposit = #ifDeposit:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemFlag" >
+        item_flag = #itemFlag:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="usefulCount" >
+        useful_count =ifnull(useful_count,0) + #usefulCount:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="forwordCount" >
+        forword_count =ifnull(forword_count,0) + #forwordCount:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="shareWebUrl" >
+        share_web_url = #shareWebUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="shareSummary" >
+        share_summary = #shareSummary:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="flag" >
+        flag = #flag:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="qrcodeUrl" >
+        qrcode_url = #qrcodeUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="qrcodeImgUrl" >
+        qrcode_img_url = #qrcodeImgUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="onlineDate" >
+        online_date = #onlineDate:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="offlineDate" >
+        offline_date = #offlineDate:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="customstatus" >
+        customStatus = #customstatus:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="customdesc" >
+        customDesc = #customdesc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="destinationJson1" >
+        destination_json1 = #destinationJson1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="destinationJson2" >
+        destination_json2 = #destinationJson2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="subjectJson1" >
+        subject_json1 = #subjectJson1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="subjectJson2" >
+        subject_json2 = #subjectJson2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="supplierdesc" >
+        supplierDesc = #supplierdesc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="mostNum" >
+        most_num = #mostNum:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="leastNum" >
+        least_num = #leastNum:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="musicWebUrl" >
+        music_web_url = #musicWebUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="musicWebAuthor" >
+        music_web_author = #musicWebAuthor:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="h5ShareWebUrl" >
+        h5_share_web_url = #h5ShareWebUrl:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where item_id = #itemId:INTEGER#
+  </update>
+  
+   <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="itemId" >
+        ITEM_ID = #itemId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="itemName" >
+        ITEM_NAME like '%$itemName$%'
+      </isNotNull>
+      <isNotNull prepend="and" property="itemStatus" >
+        ITEM_STATUS = #itemStatus:TINYINT#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        YN = #yn:TINYINT#
+      </isNotNull>
+       <isNotNull prepend="and" property="itemFlag" >
+        item_flag = #itemFlag:INTEGER#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  <!-- 查询条件2 -->
+  <sql id="condition2" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="itemId" >
+        item_id != #itemId:INTEGER# 
+      </isNotNull>
+       <isNotNull prepend="and" property="dateId1" >
+        date_id1 = #dateId1:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="itemName" >
+        ITEM_NAME like '%$itemName$%'
+      </isNotNull>
+      <isNotNull prepend="and" property="destinationJson1" >
+        destination_json1 like '%$destinationJson1$%'
+      </isNotNull>
+      <isNotNull prepend="and" property="itemStatus" >
+        ITEM_STATUS = #itemStatus:TINYINT#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        YN = #yn:TINYINT#
+      </isNotNull>
+       <isNotNull prepend="and" property="itemFlag" >
+        item_flag = #itemFlag:INTEGER#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.ItemQuery" resultClass="java.lang.Integer" >
+    select count(1) from item
+    <include refid="item.condition" />
+  </select>
+  
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.ItemQuery" resultMap="ItemResult" >
+     select <include refid="item.queryField" />
+    from item
+    <include refid="item.condition" />
+  </select>
+  
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.ItemQuery" resultMap="ItemResult" >
+    select <include refid="item.queryField" /> from item
+    <include refid="item.condition" />
+  	limit #start#,#pageSize#
+  </select>  
+  <select id="selectOthersByConditionForPage" parameterClass="com.xindong.api.domain.query.ItemQuery" resultMap="ItemResult" >
+  	SELECT <include refid="item.queryField" />  FROM
+		item 
+	 <include refid="item.condition2" />
+	 ORDER BY RAND()
+  	limit #start#,#pageSize#
+  	  </select>
+  	  
+  <select id="selectByskuId" resultClass="java.lang.String" parameterClass="java.lang.Integer" >
+     select item_name
+     from item  where item_id  =(select item_id from sku where sku_id =#skuId#)
+  </select>
+</sqlMap>

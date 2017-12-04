@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="comment" >
+  <resultMap id="CommentResult" class="com.xindong.api.domain.Comment" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="business_id" property="businessId" jdbcType="INTEGER" />
+    <result column="topped" property="topped" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="balance_amount" property="balanceAmount" jdbcType="DECIMAL" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="bak_first" property="bakFirst" jdbcType="VARCHAR" />
+    <result column="bak_second" property="bakSecond" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="img_one" property="imgOne" jdbcType="VARCHAR" />
+    <result column="img_two" property="imgTwo" jdbcType="VARCHAR" />
+    <result column="img_three" property="imgThree" jdbcType="VARCHAR" />
+    <result column="img_four" property="imgFour" jdbcType="VARCHAR" />
+  </resultMap>
+ <!-- 查询字段 -->
+  <sql id="queryField">
+    id, sku_id, item_id, item_name, user_id, user_name, title, content, comment_time, score,
+      type, business_id, topped, status, deleted, integral, balance_amount, ip, bak_first,
+      bak_second, yn, created, modified, img_one, img_two, img_three, img_four
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="CommentResult" parameterClass="com.xindong.api.domain.Comment" >
+    select <include refid="comment.queryField" />
+    from comment
+    where id = #id:INTEGER#
+  </select>
+ 
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.Comment" >
+    delete from comment
+    where id = #id:INTEGER#
+  </delete>
+  
+  <insert id="insert" parameterClass="com.xindong.api.domain.Comment" >
+    insert into comment ( sku_id, item_id, item_name, user_id, user_name, title, content,
+      comment_time, score, type, business_id, topped, status, deleted, integral, balance_amount, ip,
+      bak_first, bak_second, yn, created, modified, img_one, img_two, img_three, img_four)
+    values (#skuId:INTEGER#, #itemId:INTEGER#, #itemName:VARCHAR#, #userId:INTEGER#,
+      #userName:VARCHAR#, #title:VARCHAR#, #content:VARCHAR#, #commentTime:TIMESTAMP#,
+      #score:INTEGER#, #type:INTEGER#, #businessId:INTEGER#, #topped:INTEGER#, #status:INTEGER#,
+      #deleted:INTEGER#, #integral:INTEGER#, #balanceAmount:DECIMAL#, #ip:VARCHAR#,
+      #bakFirst:VARCHAR#, #bakSecond:INTEGER#,  1, now(), now(), #imgOne:VARCHAR#, #imgTwo:VARCHAR#, #imgThree:VARCHAR#,
+      #imgFour:VARCHAR#)
+      <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="id">
+			<![CDATA[SELECT @@IDENTITY AS id ]]>
+	  </selectKey>
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.Comment" >
+    update comment
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="skuId" >
+        sku_id = #skuId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemName" >
+        item_name = #itemName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="userName" >
+        user_name = #userName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="title" >
+        title = #title:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="content" >
+        content = #content:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="commentTime" >
+        comment_time = #commentTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="score" >
+        score = #score:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="businessId" >
+        business_id = #businessId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="topped" >
+        topped = #topped:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="status" >
+        status = #status:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="deleted" >
+        deleted = #deleted:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="integral" >
+        integral = #integral:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceAmount" >
+        balance_amount = #balanceAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="ip" >
+        ip = #ip:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakFirst" >
+        bak_first = #bakFirst:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakSecond" >
+        bak_second = #bakSecond:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="imgOne" >
+        img_one = #imgOne:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="imgTwo" >
+        img_two = #imgTwo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="imgThree" >
+        img_three = #imgThree:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="imgFour" >
+        img_four = #imgFour:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+
+<!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	   <isNotNull prepend="and" property="itemId" >
+        item_id = #itemId:INTEGER#
+       </isNotNull>
+       <isNotNull prepend="and" property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="status" >
+        status = #status:INTEGER#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  
+  <!-- 根据条件查询信息(分页) --> 
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.CommentQuery" resultMap="CommentResult" >
+    select 
+	<include refid="comment.queryField" />
+    from comment
+    <include refid="comment.condition" />
+    order by comment_time desc
+  	limit #start#,#pageSize#
+  </select>
+  
+  <!-- 根据条件查询信息总数 -->  
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.CommentQuery" resultClass="java.lang.Integer" >
+    select count(1) from comment
+    <include refid="comment.condition" />
+  </select>
+
+</sqlMap>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="opera_log" >
+  <resultMap id="OperaLogResult" class="com.xindong.api.domain.OperaLog" >
+    <result column="opera_log_id" property="operaLogId" jdbcType="INTEGER" />
+    <result column="opera_user_id" property="operaUserId" jdbcType="INTEGER" />
+    <result column="opera_user_name" property="operaUserName" jdbcType="VARCHAR" />
+    <result column="business_id" property="businessId" jdbcType="INTEGER" />
+    <result column="opera_type" property="operaType" jdbcType="INTEGER" />
+    <result column="opera_before_txt" property="operaBeforeTxt" jdbcType="VARCHAR" />
+    <result column="poera_after_txt" property="poeraAfterTxt" jdbcType="VARCHAR" />
+    <result column="opera_result_tx" property="operaResultTx" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modify" property="modify" jdbcType="TIMESTAMP" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	 opera_log_id, opera_user_id, opera_user_name, business_id, opera_type, opera_before_txt,
+      poera_after_txt, opera_result_tx, created, modify, user_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="OperaLogResult" parameterClass="com.xindong.api.domain.OperaLog" >
+    select <include refid="opera_log.queryField" />
+    from opera_log
+    where opera_log_id = #operaLogId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.OperaLog" >
+    delete from opera_log
+    where opera_log_id = #operaLogId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.OperaLog" >
+    insert into opera_log (opera_user_id, opera_user_name, business_id, opera_type,
+      opera_before_txt, poera_after_txt, opera_result_tx, created, modify, user_type)
+    values (#operaUserId:INTEGER#, #operaUserName:VARCHAR#,
+      #businessId:INTEGER#, #operaType:INTEGER#, #operaBeforeTxt:VARCHAR#, #poeraAfterTxt:VARCHAR#,
+      #operaResultTx:VARCHAR#, now(), now(),1)
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="operaLogId">
+			<![CDATA[SELECT @@IDENTITY AS opera_log_id ]]>
+	  </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.OperaLog" >
+    update opera_log
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="operaUserId" >
+        opera_user_id = #operaUserId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="operaUserName" >
+        opera_user_name = #operaUserName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="businessId" >
+        business_id = #businessId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="operaType" >
+        opera_type = #operaType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="operaBeforeTxt" >
+        opera_before_txt = #operaBeforeTxt:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="poeraAfterTxt" >
+        poera_after_txt = #poeraAfterTxt:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="operaResultTx" >
+        opera_result_tx = #operaResultTx:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modify" >
+        modify = #modify:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="userType" >
+        user_type = #userType:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where opera_log_id = #operaLogId:INTEGER#
+  </update>
+</sqlMap>

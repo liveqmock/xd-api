@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="itemAnalysisImage" >
+  <resultMap id="itemAnalysisImageResult" class="com.xindong.api.domain.ItemAnalysisImage" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="sort_number" property="sortNumber" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="image_url_app" property="imageUrlApp" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="id" >
+  	   id = #id:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="itemId" >
+  	   item_id = #itemId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="imageUrl" >
+  	   image_url = #imageUrl:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="sortNumber" >
+  	   sort_number = #sortNumber:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="yn" >
+  	   yn = #yn:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="created" >
+  	   created = #created:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="modified" >
+  	   modified = #modified:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="type" >
+  	   type = #type:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="imageUrlApp" >
+  	   image_url_app = #imageUrlApp:VARCHAR#
+  	  </isNotNull>
+  	 </dynamic>
+  </sql>
+
+  <!-- 依据主键进行查询 -->
+  <select id="selectByPrimaryKey" resultMap="itemAnalysisImageResult" parameterClass="java.lang.Integer" >
+    select 
+    id,item_id,image_url,sort_number,yn,created,modified,type,image_url_app
+    from item_analysis_image
+    where id = #id#
+  </select>
+
+  <!-- 添加信息 -->
+  <insert id="insert" parameterClass="com.xindong.api.domain.ItemAnalysisImage" >
+    insert into item_analysis_image (
+    item_id,image_url,sort_number,yn,created,modified,type,image_url_app
+    ) values(
+    #itemId#,#imageUrl#,#sortNumber#,#yn#,#created#,#modified#,#type#,#imageUrlApp#
+    )
+    <selectKey resultClass="java.lang.Integer" keyProperty="id">
+      <![CDATA[SELECT @@IDENTITY AS id ]]>
+    </selectKey>
+  </insert>
+
+  <!-- 依据主键进行修改 -->
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.ItemAnalysisImage" >
+    update item_analysis_image set id = id
+    <dynamic>
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId#
+      </isNotNull>
+      <isNotNull prepend="," property="imageUrl" >
+        image_url = #imageUrl#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNumber" >
+        sort_number = #sortNumber#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified#
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        type = #type#
+      </isNotNull>
+      <isNotNull prepend="," property="imageUrlApp" >
+        image_url_app = #imageUrlApp#
+      </isNotNull>
+    </dynamic>
+	  where id = #id# 
+  </update>
+
+  <!-- 条件查询总数 -->
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.ItemAnalysisImageQuery" resultClass="java.lang.Integer" >
+    select count(1) from item_analysis_image
+    <include refid="itemAnalysisImage.condition" />
+  </select>
+
+  <!-- 条件查询列表 -->
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.ItemAnalysisImageQuery" resultMap="itemAnalysisImageResult" >
+    select 
+    id,item_id,image_url,sort_number,yn,created,modified,type,image_url_app
+    from item_analysis_image
+    <include refid="itemAnalysisImage.condition" />
+  </select>
+
+  <!-- 分页条件查询列表 -->
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.ItemAnalysisImageQuery" resultMap="itemAnalysisImageResult" >
+    select 
+    id,item_id,image_url,sort_number,yn,created,modified,type,image_url_app
+    from item_analysis_image
+    <include refid="itemAnalysisImage.condition" />
+    limit #start#,#pageSize#
+  </select>
+</sqlMap>

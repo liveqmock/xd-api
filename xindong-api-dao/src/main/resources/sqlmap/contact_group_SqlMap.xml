@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="contact_group" >
+  <resultMap id="ContactGroupResult" class="com.xindong.api.domain.ContactGroup" >
+    <result column="contact_id" property="contactId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_mobile" property="contactMobile" jdbcType="VARCHAR" />
+    <result column="contact_email" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="default_contact_flag" property="defaultContactFlag" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	contact_id, user_id, contact_name, contact_mobile, contact_email, default_contact_flag,
+      yn, created, modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ContactGroupResult" parameterClass="com.xindong.api.domain.ContactGroup" >
+    select <include refid="contact_group.queryField" />
+    from contact_group
+    where contact_id = #contactId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.ContactGroup" >
+    delete from contact_group
+    where contact_id = #contactId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.ContactGroup" >
+    insert into contact_group ( user_id, contact_name, contact_mobile, contact_email,
+      default_contact_flag, yn, created, modified)
+    values ( #userId:INTEGER#, #contactName:VARCHAR#, #contactMobile:VARCHAR#,
+      #contactEmail:VARCHAR#, #defaultContactFlag:INTEGER#,  1, now(), now())
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="contactId">
+			<![CDATA[SELECT @@IDENTITY AS contact_id ]]>
+	  </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.ContactGroup" >
+    update contact_group
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="contactName" >
+        contact_name = #contactName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="contactMobile" >
+        contact_mobile = #contactMobile:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="contactEmail" >
+        contact_email = #contactEmail:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="defaultContactFlag" >
+        default_contact_flag = #defaultContactFlag:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+    </dynamic>
+    where contact_id = #contactId:INTEGER#
+  </update>
+</sqlMap>

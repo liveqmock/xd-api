@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!-- 控制台日志配置 -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p - %C[%L] - %m \n" />
+		</layout>
+	</appender>
+	
+	<!-- 全局日志配置 -->
+    <appender name="activexAppender" class="org.apache.log4j.DailyRollingFileAppender">       
+        <!-- <param name="File" value="/export/home/tomcat/domains/t.api.xindong8.com/server1/logs/xindong-api-web.log" />  -->      
+        <param name="file" value="E:/logs/xindong-api-web/xindong-api-web.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />         
+        <layout class="org.apache.log4j.PatternLayout">       
+         <param name="ConversionPattern"         
+            value="[%d{MMdd HH:mm:ss SSS\} %-5p] [%t] %c{3\} - %m%n" />       
+        </layout>         
+    </appender> 
+    
+    <!-- 支付接口日志配置--> 
+    <appender name="orderPayFileAll" class="org.apache.log4j.RollingFileAppender">       
+        <!-- <param name="File" value="/export/home/tomcat/domains/api.xindong8.com/server1/logs/orderPay/orderPayAll.log" /> -->        
+        <param name="file" value="E:/logs/orderPay/orderPayAll.log" />
+        <layout class="org.apache.log4j.PatternLayout">       
+        	<param name="ConversionPattern"         
+            value="[%d{yyyy-MM-dd HH:mm:ss SSS\} %-5p] [%t] %c{3\} - %m%n" />       
+        </layout>         
+    </appender>
+    
+    <appender name="orderPayFile" class="org.apache.log4j.DailyRollingFileAppender">       
+       <!--  <param name="File" value="/export/home/tomcat/domains/api.xindong8.com/server1/logs/orderPay/orderPay.log" /> -->        
+        <param name="file" value="E:/logs/orderPay/orderPay.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />      
+        <layout class="org.apache.log4j.PatternLayout">       
+         	<param name="ConversionPattern"	value="[%d{yyyy-MM-dd HH:mm:ss SSS\} %-5p] [%t] %c{3\} - %m%n" />       
+        </layout>
+    </appender>
+    
+    <logger name="com.xindong.api.web.controller.OrderPayController" additivity="false">       
+        <priority value="DEBUG "/>         
+        <appender-ref ref="orderPayFile" />
+        <appender-ref ref="orderPayFileAll" />         
+    </logger>  
+    
+    <!-- 根logger的设置-->       
+    <root>       
+        <priority value="DEBUG"/>       
+        <appender-ref ref="CONSOLE"/>       
+        <appender-ref ref="activexAppender"/>           
+    </root>
+    
+    <!--屏蔽所有org.springframework.*输出的Debug（及以下）信息-->
+    <logger name="org.springframework" additivity="false">
+        <level value="INFO"></level>
+    </logger>
+    
+    <logger name="com.ibatis.common.logging" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="console" />
+        <appender-ref ref="rootLogger" />
+    </logger>
+ 
+    <logger name="com.ibatis" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="console" />
+        <appender-ref ref="rootLogger" />
+    </logger>
+ 
+    <logger name="java.sql.Connection" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="console" />
+        <appender-ref ref="rootLogger" />
+    </logger>
+ 
+    <logger name="java.sql.Statement" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="console" />
+        <appender-ref ref="rootLogger" />
+    </logger>       
+</log4j:configuration>

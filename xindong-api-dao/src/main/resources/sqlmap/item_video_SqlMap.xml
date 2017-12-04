@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="itemVideo" >
+  <resultMap id="itemVideoResult" class="com.xindong.api.domain.ItemVideo" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="share_web_url" property="shareWebUrl" jdbcType="VARCHAR" />
+    <result column="h5_share_web_url" property="h5ShareWebUrl" jdbcType="VARCHAR" />
+    <result column="video_desc" property="videoDesc" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="id" >
+  	   id = #id:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="itemId" >
+  	   item_id = #itemId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="shareWebUrl" >
+  	   share_web_url = #shareWebUrl:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="h5ShareWebUrl" >
+  	   h5_share_web_url = #h5ShareWebUrl:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="videoDesc" >
+  	   video_desc = #videoDesc:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="sortNum" >
+  	   sort_num = #sortNum:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="yn" >
+  	   yn = #yn:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="created" >
+  	   created = #created:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="modified" >
+  	   modified = #modified:TIMESTAMP#
+  	  </isNotNull>
+  	 </dynamic>
+  </sql>
+
+  <!-- 依据主键进行查询 -->
+  <select id="selectByPrimaryKey" resultMap="itemVideoResult" parameterClass="java.lang.Integer" >
+    select 
+    id,item_id,share_web_url,h5_share_web_url,video_desc,sort_num,yn,created,modified
+    from item_video
+    where id = #id#
+  </select>
+
+  <!-- 添加信息 -->
+  <insert id="insert" parameterClass="com.xindong.api.domain.ItemVideo" >
+    insert into item_video (
+    item_id,share_web_url,h5_share_web_url,video_desc,sort_num,yn,created,modified
+    ) values(
+    #itemId#,#shareWebUrl#,#h5ShareWebUrl#,#videoDesc#,#sortNum#,#yn#,#created#,#modified#
+    )
+    <selectKey resultClass="java.lang.Integer" keyProperty="id">
+      <![CDATA[SELECT @@IDENTITY AS id ]]>
+    </selectKey>
+  </insert>
+
+  <!-- 依据主键进行修改 -->
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.ItemVideo" >
+    update item_video set id = id
+    <dynamic>
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId#
+      </isNotNull>
+      <isNotNull prepend="," property="shareWebUrl" >
+        share_web_url = #shareWebUrl#
+      </isNotNull>
+      <isNotNull prepend="," property="h5ShareWebUrl" >
+        h5_share_web_url = #h5ShareWebUrl#
+      </isNotNull>
+      <isNotNull prepend="," property="videoDesc" >
+        video_desc = #videoDesc#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNum" >
+        sort_num = #sortNum#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified#
+      </isNotNull>
+    </dynamic>
+	  where id = #id# 
+  </update>
+
+  <!-- 条件查询总数 -->
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.ItemVideoQuery" resultClass="java.lang.Integer" >
+    select count(1) from item_video
+    <include refid="itemVideo.condition" />
+    and item_id IN (select item_id from item where item_status=1)
+  </select>
+
+  <!-- 条件查询列表 -->
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.ItemVideoQuery" resultMap="itemVideoResult" >
+    select 
+    id,item_id,share_web_url,h5_share_web_url,video_desc,sort_num,yn,created,modified
+    from item_video
+  	<include refid="itemVideo.condition" />
+  	order by item_id desc
+  </select>
+
+  <!-- 分页条件查询列表 -->
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.ItemVideoQuery" resultMap="itemVideoResult" >
+    select 
+    id,item_id,share_web_url,h5_share_web_url,video_desc,sort_num,yn,created,modified
+    from item_video
+    <include refid="itemVideo.condition" />
+    and item_id IN (select item_id from item where item_status=1)
+    order by item_id desc
+    limit #start#,#pageSize#
+  </select>
+</sqlMap>

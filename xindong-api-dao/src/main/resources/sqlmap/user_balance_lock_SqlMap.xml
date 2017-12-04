@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user_balance_lock" >
+  <resultMap id="UserBalanceLockResult" class="com.xindong.api.domain.UserBalanceLock" >
+    <result column="balance_lock_id" property="balanceLockId" jdbcType="INTEGER" />
+    <result column="balance_id" property="balanceId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="balance_amount" property="balanceAmount" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="balance_status" property="balanceStatus" jdbcType="INTEGER" />
+    <result column="work_status" property="workStatus" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="grant_type" property="grantType" jdbcType="TINYINT" />
+    <result column="business_value" property="businessValue" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	balance_lock_id, balance_id, user_id, balance_amount, order_id, balance_status,
+      work_status, created, modified, grant_type, business_value, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="UserBalanceLockResult" parameterClass="com.xindong.api.domain.UserBalanceLock" >
+    select 
+      <include refid="user_balance_lock.queryField" />
+    from user_balance_lock
+    where balance_lock_id = #balanceLockId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.UserBalanceLock" >
+    delete from user_balance_lock
+    where balance_lock_id = #balanceLockId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.UserBalanceLock" >
+    insert into user_balance_lock ( balance_id, user_id, balance_amount,
+      order_id, balance_status, work_status, created, modified, grant_type, business_value, remark)
+    values (#balanceId:INTEGER#, #userId:INTEGER#,
+      #balanceAmount:BIGINT#, #orderId:INTEGER#, #balanceStatus:INTEGER#, #workStatus:INTEGER#,
+      now(),now(), #grantType:TINYINT#,#businessValue:VARCHAR#, #remark:VARCHAR#)
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.UserBalanceLock" >
+    update user_balance_lock set  modified = now()
+    <dynamic >
+      <isNotNull prepend="," property="balanceId" >
+        balance_id = #balanceId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceAmount" >
+        balance_amount = #balanceAmount:BIGINT#
+      </isNotNull>
+      <isNotNull prepend="," property="orderId" >
+        order_id = #orderId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceStatus" >
+        balance_status = #balanceStatus:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="workStatus" >
+        work_status = #workStatus:INTEGER#
+      </isNotNull>
+       <isNotNull prepend="," property="grantType" >
+        grant_type = #grantType:TINYINT#
+      </isNotNull>
+      <isNotNull prepend="," property="businessValue" >
+        business_value = #businessValue:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="remark" >
+        remark = #remark:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where balance_lock_id = #balanceLockId:INTEGER#
+  </update>
+</sqlMap>

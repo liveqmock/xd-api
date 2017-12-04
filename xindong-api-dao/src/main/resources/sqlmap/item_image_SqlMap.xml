@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="item_image" >
+  <resultMap id="ItemImageResult" class="com.xindong.api.domain.ItemImage" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="sort_number" property="sortNumber" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	 id, item_id, image_url, sort_number, yn, created, modified, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ItemImageResult" parameterClass="com.xindong.api.domain.ItemImage" >
+    select
+    <include refid="item_image.queryField" />
+    from item_image
+    where id = #id:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.ItemImage" >
+    delete from item_image
+    where id = #id:INTEGER#
+  </delete>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.ItemImage" >
+    update item_image
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="imageUrl" >
+        image_url = #imageUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNumber" >
+        sort_number = #sortNumber:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+       <isNotNull prepend="," property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  
+  <select id="selectByItemId" resultMap="ItemImageResult" parameterClass="java.lang.Integer" >
+    select
+    <include refid="item_image.queryField" />
+    from item_image
+    where item_id = #itemId:INTEGER# and  yn = 1 and image_url !=''
+  </select>
+  <select id="selectByCondition" resultMap="ItemImageResult" parameterClass="com.xindong.api.domain.ItemImage" >
+    select
+    <include refid="item_image.queryField" />
+    from item_image
+    where item_id = #itemId:INTEGER# and  yn = 1 and image_url !=''
+    <isNotNull prepend="and" property="type" >
+        type = #type:INTEGER#
+    </isNotNull>
+  </select>
+  
+  <!-- 查询H5图片-->
+  <select id="selectByConditionForH5" resultMap="ItemImageResult" parameterClass="com.xindong.api.domain.ItemImage" >
+    select
+    <include refid="item_image.queryField" />
+    from item_image
+    where item_id = #itemId:INTEGER# and  yn = 1 and image_url !=''
+    <isNotNull prepend="and" property="type" >
+        type = #type:INTEGER#
+    </isNotNull>
+    order by sort_number desc
+  </select>
+</sqlMap>

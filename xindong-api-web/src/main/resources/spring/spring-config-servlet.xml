@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	default-autowire="byName">
+
+	<!-- spring注解的配置 -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.xindong.api" />
+	
+	<!-- spring拦截器的配置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/cartInfo/*" />
+			<mvc:mapping path="/cartInfo/*/*" />
+			<mvc:mapping path="/userInfo/*" />
+			<mvc:mapping path="/userInfo/*/*" />
+			<mvc:mapping path="/sell/*/*/*" />
+			<mvc:mapping path="/sell/*/*" />
+			<mvc:mapping path="/orderInfo/*/*" />
+			<mvc:mapping path="/orderInfo/*" />
+			<mvc:mapping path="/consigneeInfo/*" />
+			<mvc:mapping path="/favorites/*" />
+			<mvc:mapping path="/favoritesSeller/*" />
+			<mvc:mapping path="/sellerBookkeeping/*" />
+			<mvc:mapping path="/coupon/*" />
+			<mvc:mapping path="/userIntegral/*" />
+            <mvc:mapping path="/v/*" />
+			<bean class="com.xindong.api.web.intercept.LoginInterceptor" />
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/item/getItemByItemId" />
+			<bean class="com.xindong.api.web.intercept.ItemInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- ajax json的配置 -->
+	<bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+					<property name="objectMapper" ref="jacksonObjectMapper"></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- vm视图的配置 -->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="." />
+		<property name="configLocation" value="classpath:velocity.properties" />
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop><!-- 指定模板引擎进行模板处理的编码 -->
+				<prop key="output.encoding">UTF-8</prop><!-- 指定输出流的编码 -->
+				<prop key="contentType">text/html;charset=UTF-8</prop><!-- contentType -->
+			</props>
+		</property>
+	</bean>
+	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+		<property name="cache" value="false"></property><!--是否缓存模板 -->
+		<property name="suffix" value=".vm" />
+		<property name="prefix" value="/WEB-INF/vm/" />
+		<property name="layoutUrl" value="/WEB-INF/vm/layout/default.vm" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="dateToolAttribute" value="dateTool" />
+		<property name="numberToolAttribute" value="numberTool" />
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+	</bean>
+	
+	<!-- jsp视图的配置 -->
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+          <property name="cache" value="false"/>  
+          <property name="prefix" value="/WEB-INF/jsp/"/>  
+          <property name="suffix" value=".jsp"/>  
+          <property name="contentType" value="text/html;charset=UTF-8"></property>  
+          <property name="order"><value>1</value></property>  
+    </bean> 
+    
+    <!--上传  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	       <!-- set the max upload size100MB -->  
+	   <property name="maxUploadSize">  
+	       <value>8000000</value>  
+	   </property>  
+	   <property name="maxInMemorySize">  
+	       <value>4096</value>  
+	   </property>
+	 </bean>
+</beans>

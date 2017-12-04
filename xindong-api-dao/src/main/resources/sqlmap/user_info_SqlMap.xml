@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user_info" >
+  <resultMap id="UserInfoResult" class="com.xindong.api.domain.UserInfo" >
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="user_flag" property="userFlag" jdbcType="VARCHAR" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="register_ip" property="registerIp" jdbcType="VARCHAR" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="head_url" property="headUrl" jdbcType="VARCHAR" />
+    <result column="qrcode" property="qrcode" jdbcType="VARCHAR" />
+    <result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="birth_date" property="birthDate" jdbcType="DATE" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="vender_user_id" property="venderUserId" jdbcType="INTEGER" />
+    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+    <result column="invitation_code" property="invitationCode" jdbcType="VARCHAR" />
+    <result column="register_invitation_code" property="registerInvitationCode" jdbcType="VARCHAR" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	user_id, user_name, mobile, password, user_type, user_flag, register_time, register_ip,
+      last_login_time, last_login_ip, level, head_url, qrcode, qrcode_url, sex, birth_date,
+      id_number, vender_user_id, unionid, create_time, modified_time, yn, province, city, supplier
+      ,invitation_code, register_invitation_code
+   </sql>
+  <select id="selectByPrimaryKey" resultMap="UserInfoResult" parameterClass="com.xindong.api.domain.UserInfo" >
+    select <include refid="user_info.queryField" /> 
+    from user_info
+    where user_id = #userId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.UserInfo" >
+    delete from user_info
+    where user_id = #userId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.UserInfo" >
+    insert into user_info (user_name, mobile, password, user_type, user_flag,
+      register_time, register_ip, last_login_time, last_login_ip, level, head_url, qrcode,
+      qrcode_url, sex, birth_date, id_number, vender_user_id, unionid,  yn,create_time, 
+      modified_time, province, city, supplier,invitation_code, register_invitation_code)
+    values ( #userName:VARCHAR#, #mobile:VARCHAR#, #password:VARCHAR#,
+      #userType:INTEGER#, #userFlag:VARCHAR#, #registerTime:TIMESTAMP#, #registerIp:VARCHAR#,
+      #lastLoginTime:TIMESTAMP#, #lastLoginIp:VARCHAR#, #level:INTEGER#, #headUrl:VARCHAR#,
+      #qrcode:VARCHAR#, #qrcodeUrl:VARCHAR#, #sex:INTEGER#, #birthDate:DATE#, #idNumber:VARCHAR#,
+      #venderUserId:INTEGER#, #unionid:VARCHAR#,  1,now(), now(), #province:VARCHAR#, 
+      #city:VARCHAR#, #supplier:VARCHAR#,#invitationCode:VARCHAR#, #registerInvitationCode:VARCHAR#)
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="userId">
+			<![CDATA[SELECT @@IDENTITY AS user_id ]]>
+	  </selectKey>
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.UserInfo" >
+    update user_info
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="userName" >
+        user_name = #userName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="mobile" >
+        mobile = #mobile:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="password" >
+        password = #password:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="userType" >
+        user_type = #userType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="userFlag" >
+        user_flag = #userFlag:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="registerTime" >
+        register_time = #registerTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="registerIp" >
+        register_ip = #registerIp:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="lastLoginTime" >
+        last_login_time = #lastLoginTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="lastLoginIp" >
+        last_login_ip = #lastLoginIp:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="level" >
+        level = #level:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="headUrl" >
+        head_url = #headUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="qrcode" >
+        qrcode = #qrcode:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="qrcodeUrl" >
+        qrcode_url = #qrcodeUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sex" >
+        sex = #sex:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="birthDate" >
+        birth_date = #birthDate:DATE#
+      </isNotNull>
+      <isNotNull prepend="," property="idNumber" >
+        id_number = #idNumber:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="venderUserId" >
+        vender_user_id = #venderUserId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="unionid" >
+        unionid = #unionid:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="createTime" >
+        create_time = #createTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modifiedTime" >
+        modified_time = #modifiedTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="province" >
+        province = #province:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="city" >
+        city = #city:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="supplier" >
+        supplier = #supplier:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="invitationCode" >
+        invitation_code = #invitationCode:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="registerInvitationCode" >
+        register_invitation_code = #registerInvitationCode:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where user_id = #userId:INTEGER#
+  </update>
+  
+   <!-- 查询条件 -->
+  <sql id="condition" >
+    where YN =1 and USER_TYPE = 1
+  	<dynamic>
+  	  <isNotNull prepend="and" property="userId" >
+        USER_ID = #userId:VARCHAR#
+      </isNotNull>
+  	  <isNotNull prepend="and" property="mobile" >
+        MOBILE = #mobile:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="password" >
+        PASSWORD = #password:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="unionid" >
+        unionid = #unionid:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="invitationCode" >
+        invitation_code = #invitationCode:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="registerInvitationCode" >
+        register_invitation_code = #registerInvitationCode:VARCHAR#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.UserInfoQuery" resultClass="java.lang.Integer" >
+    select count(1) from user_info
+    <include refid="user_info.condition" />
+  </select>
+  
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.UserInfoQuery"  resultMap="UserInfoResult" >
+    select <include refid="user_info.queryField" />
+    from user_info
+    <include refid="user_info.condition" />
+  </select>
+  <!-- 唯一邀请码 查询 -->
+   <select id="selectByInvitationCode" resultMap="UserInfoResult" parameterClass="java.lang.String" >
+    select <include refid="user_info.queryField" /> 
+    from user_info
+    where invitation_code = #invitation_code:VARCHAR#
+  </select>
+  <!-- 统计邀请码 总共数量 -->
+   <select id="countByRegisterInvitationCode" resultClass="java.lang.Integer" parameterClass="java.lang.String" >
+    select count(1)
+    from user_info
+    where register_invitation_code = #registerInvitationCode:VARCHAR#
+  </select>
+  
+    <!-- 根据微信唯一主键查询用户 -->
+  <select id="selectByUnionid" resultMap="UserInfoResult" parameterClass="java.lang.String" >
+    select <include refid="user_info.queryField" />
+    from user_info
+    where unionid = #unionid:VARCHAR# and YN =1 and  USER_TYPE = 1
+  </select>
+</sqlMap>

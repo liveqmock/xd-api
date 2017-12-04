@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Category" >
+  <!-- 返回数据 -->
+  <resultMap id="CategoryResult" class="com.xindong.api.domain.Category" >
+    <result column="category_id" property="categoryId"  />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_level" property="categoryLevel"  />
+    <result column="parent_category_id" property="parentCategoryId"  />
+    <result column="sort_number" property="sortNumber"  />
+    <result column="if_have_sale_property" property="ifHaveSaleProperty"  />
+    <result column="yn" property="yn"  />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	  category_id, category_name, category_level, parent_category_id, sort_number,
+      if_have_sale_property, yn, created, modified,img_url
+  </sql>
+  
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="categoryId" >
+        category_id = #categoryId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="categoryName" >
+        category_name = #categoryName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="categoryLevel" >
+        category_level = #categoryLevel:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="parentCategoryId" >
+        parent_category_id = #parentCategoryId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="sortNumber" >
+        sort_number = #sortNumber:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="ifHaveSaleProperty" >
+        if_have_sale_property = #ifHaveSaleProperty:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="imgUrl" >
+        img_url = #imgUrl:INTEGER#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  
+  
+
+  <select id="selectByPrimaryKey" resultMap="CategoryResult" parameterClass="java.lang.Integer" >
+    select 
+	<include refid="Category.queryField" />
+    from category
+    where category_id = #categoryId:INTEGER#
+  </select>
+  
+
+  <insert id="insert" parameterClass="com.xindong.api.domain.Category" >
+    insert into category ( category_name, category_level, parent_category_id,
+      sort_number, if_have_sale_property, yn, created, modified,img_url)
+    values (#categoryName:VARCHAR#, #categoryLevel:INTEGER#,
+      #parentCategoryId:INTEGER#, #sortNumber:INTEGER#, #ifHaveSaleProperty:INTEGER#, 1,
+      now(),now(),#imgUrl:INTEGER#)
+      <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="categoryId">
+			<![CDATA[SELECT @@IDENTITY AS category_id ]]>
+	  </selectKey>
+  </insert>
+  
+
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.Category" >
+    update category set modified = now()
+    <dynamic >
+      <isNotNull prepend="," property="categoryName" >
+        category_name = #categoryName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="categoryLevel" >
+        category_level = #categoryLevel:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="parentCategoryId" >
+        parent_category_id = #parentCategoryId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNumber" >
+        sort_number = #sortNumber:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="ifHaveSaleProperty" >
+        if_have_sale_property = #ifHaveSaleProperty:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+       <isNotNull prepend="," property="imgUrl" >
+        img_url = #imgUrl:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where category_id = #categoryId:INTEGER#
+  </update>
+  
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.CategoryQuery" resultClass="java.lang.Integer" >
+    select count(1) from category
+    <include refid="Category.condition" />
+    order by sort_number
+  </select>
+  
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.CategoryQuery" resultMap="CategoryResult"  >
+    select 
+	<include refid="Category.queryField" />
+    from category
+    <include refid="Category.condition" />
+    order by sort_number
+  </select>
+  
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.CategoryQuery" resultMap="CategoryResult"  >
+    select 
+	<include refid="Category.queryField" />
+    from category
+    <include refid="Category.condition" />
+    order by sort_number
+  	limit #start#,#pageSize#
+  </select>
+  
+</sqlMap>

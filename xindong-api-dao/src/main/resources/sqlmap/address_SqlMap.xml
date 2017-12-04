@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Address" >
+  <resultMap id="AddressResult" class="com.xindong.api.domain.Address" >
+    <result column="ADDRESS_ID" property="addressId"  />
+    <result column="ADDRESS_NAME" property="addressName" jdbcType="VARCHAR" />
+    <result column="ADDRESS_LEVEL" property="addressLevel"  />
+    <result column="ADDRESS_FID" property="addressFid"  />
+    <result column="CREATED" property="created" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED" property="modified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="addressId" >
+        ADDRESS_ID = #addressId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="addressName" >
+        ADDRESS_NAME = #addressName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="addressLevel" >
+        ADDRESS_LEVEL = #addressLevel:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="addressFid" >
+        ADDRESS_FID = #addressFid:INTEGER#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  
+  <!-- 依据主键进行查询 -->
+  <select id="selectByPrimaryKey" resultMap="AddressResult" parameterClass="java.lang.Integer" >
+    select ADDRESS_ID, ADDRESS_NAME, ADDRESS_LEVEL, ADDRESS_FID, CREATED, MODIFIED
+    from address
+    where ADDRESS_ID = #addressId:INTEGER#
+  </select>
+  
+  <!-- 添加信息 -->
+  <insert id="insert" parameterClass="com.xindong.api.domain.Address" >
+    insert into address (ADDRESS_NAME, ADDRESS_LEVEL, ADDRESS_FID, CREATED, MODIFIED)
+    values (#addressName:VARCHAR#, #addressLevel:INTEGER#,
+      #addressFid:INTEGER#, now(), now())
+      <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="addressId">
+			<![CDATA[SELECT @@IDENTITY AS ADDRESS_ID ]]>
+	  </selectKey>
+  </insert>
+  
+  <!-- 依据主键进行修改 -->
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.Address" >
+    update address set MODIFIED = now()
+    <dynamic>
+      <isNotNull prepend="," property="addressName" >
+        ADDRESS_NAME = #addressName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="addressLevel" >
+        ADDRESS_LEVEL = #addressLevel:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="addressFid" >
+        ADDRESS_FID = #addressFid:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where ADDRESS_ID = #addressId:INTEGER#
+  </update>
+  
+  <!-- 条件查询总数 -->
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.AddressQuery" resultClass="java.lang.Integer" >
+    select count(1) from address
+    <include refid="Address.condition" />
+  </select>
+  
+  <!-- 条件查询列表 -->
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.AddressQuery" resultMap="AddressResult" >
+    select ADDRESS_ID, ADDRESS_NAME, ADDRESS_LEVEL, ADDRESS_FID, CREATED, MODIFIED
+    from address
+    <include refid="Address.condition" />
+  </select>
+  
+  <resultMap id="AddressCountyResult" class="com.xindong.api.domain.vo.AddressCounty" >
+    <result column="ADDRESS_ID" property="addressId"  />
+    <result column="ADDRESS_NAME" property="addressName" jdbcType="VARCHAR" />
+    <result column="ADDRESS_LEVEL" property="addressLevel"  />
+    <result column="ADDRESS_FID" property="addressFid"  />
+  </resultMap>
+  <!-- 条件查询列表 -->
+  <select id="selectByAddressCounty" parameterClass="com.xindong.api.domain.query.AddressQuery" resultMap="AddressCountyResult" >
+    select ADDRESS_ID, ADDRESS_NAME, ADDRESS_LEVEL, ADDRESS_FID, CREATED, MODIFIED
+    from address
+    <include refid="Address.condition" />
+  </select>
+  
+</sqlMap>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="tour_origin" >
+  <resultMap id="TourOriginResult" class="com.xindong.api.domain.TourOrigin" >
+    <result column="origin_id" property="originId" jdbcType="INTEGER" />
+    <result column="origin_name" property="originName" jdbcType="VARCHAR" />
+    <result column="origin_level" property="originLevel" jdbcType="INTEGER" />
+    <result column="parent_origin_id" property="parentOriginId" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	origin_id, origin_name, origin_level, parent_origin_id, yn, created, modified
+   </sql>
+  <select id="selectByPrimaryKey" resultMap="TourOriginResult" parameterClass="com.xindong.api.domain.TourOrigin" >
+    select <include refid="tour_origin.queryField" /> 
+    from tour_origin
+    where origin_id = #originId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.TourOrigin" >
+    delete from tour_origin
+    where origin_id = #originId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.TourOrigin" >
+    insert into tour_origin (origin_name, origin_level, parent_origin_id, yn, created,
+      modified)
+    values ( #originName:VARCHAR#, #originLevel:INTEGER#,
+      #parentOriginId:INTEGER#, 1,now(), now())
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="originId">
+			<![CDATA[SELECT @@IDENTITY AS origin_id ]]>
+	  </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.TourOrigin" >
+    update tour_origin
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="originName" >
+        origin_name = #originName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="originLevel" >
+        origin_level = #originLevel:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="parentOriginId" >
+        parent_origin_id = #parentOriginId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+    </dynamic>
+    where origin_id = #originId:INTEGER#
+  </update>
+  
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+       <isNotNull prepend="and" property="originName" >
+        origin_name = #originName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="originLevel" >
+        origin_level = #originLevel:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="parentOriginId" >
+        parent_origin_id = #parentOriginId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        yn = #yn#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  <select id="selectByCondition" resultMap="TourOriginResult" parameterClass="com.xindong.api.domain.TourOrigin" >
+    select <include refid="tour_origin.queryField" /> 
+    from tour_origin
+   <include refid="tour_origin.condition" />
+    order by modified 
+  </select>
+  
+</sqlMap>

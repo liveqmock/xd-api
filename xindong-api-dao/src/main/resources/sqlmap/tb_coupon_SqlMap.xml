@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="TbCoupon" >
+  <resultMap id="TbCouponResult" class="com.xindong.api.domain.TbCoupon" >
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="coupon_prom_id" property="couponPromId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="coupon_type" property="couponType" jdbcType="INTEGER" />
+    <result column="order_quota" property="orderQuota" jdbcType="INTEGER" />
+    <result column="coupon_amount" property="couponAmount" jdbcType="INTEGER" />
+    <result column="coupon_state" property="couponState" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="coupon_valid_starttime" property="couponValidStarttime" jdbcType="TIMESTAMP" />
+    <result column="coupon_valid_endtime" property="couponValidEndtime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="coupon_rule_type" property="couponRuleType" jdbcType="INTEGER" />
+    <result column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="bak_first" property="bakFirst" jdbcType="VARCHAR" />
+    <result column="bak_second" property="bakSecond" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="TbCouponCondition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="couponId" >
+  	   coupon_id = #couponId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponPromId" >
+  	   coupon_prom_id = #couponPromId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponValidStarttime" >
+  	   <![CDATA[ coupon_valid_starttime < #couponValidStarttime:TIMESTAMP# ]]>
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponValidEndtime" >
+  	   <![CDATA[ coupon_valid_endtime > #couponValidEndtime:TIMESTAMP# ]]>
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="createTime" >
+  	   create_time = #createTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="updateTime" >
+  	   update_time = #updateTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponName" >
+  	   coupon_name = #couponName:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponType" >
+  	   coupon_type = #couponType:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponState" >
+  	   coupon_state = #couponState:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="userId" >
+  	   user_id = #userId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="orderId" >
+  	   order_id = #orderId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="yn" >
+  	   yn = #yn:INTEGER#
+  	  </isNotNull>
+  	 </dynamic>
+  </sql>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	coupon_id,coupon_prom_id,coupon_type,order_quota,coupon_amount,coupon_state,yn
+    ,user_id,order_id,coupon_valid_starttime,coupon_valid_endtime,create_time,
+    update_time,coupon_name,order_id,coupon_rule_type, sku_id, item_id, bak_first, bak_second
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="TbCouponResult" parameterClass="java.lang.Integer" >
+    select 
+    <include refid="TbCoupon.queryField" />
+    from tb_coupon
+    where coupon_id = #couponId#
+  </select>
+   <insert id="insert" parameterClass="com.xindong.api.domain.TbCoupon" >
+    insert into tb_coupon (
+    coupon_prom_id,coupon_type,order_quota,coupon_amount,coupon_state,yn,
+    user_id,coupon_valid_starttime,coupon_valid_endtime,create_time,update_time,coupon_name
+    ,coupon_rule_type, sku_id, item_id, bak_first, bak_second
+    ) values(
+    #couponPromId#,#couponType#,#orderQuota#,#couponAmount#,#couponState#,#yn#,
+    #userId#,#couponValidStarttime#,#couponValidEndtime#,now(),now(),#couponName#
+    , #couponRuleType:INTEGER#, #skuId:INTEGER#, #itemId:INTEGER#,
+      #bakFirst:VARCHAR#, #bakSecond:INTEGER#)
+    <selectKey resultClass="java.lang.Integer" keyProperty="couponId">
+      <![CDATA[SELECT @@IDENTITY AS coupon_id ]]>
+    </selectKey>
+  </insert>
+ 
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.TbCoupon" >
+    update tb_coupon set coupon_id = coupon_id
+    <dynamic>
+      <isNotNull prepend="," property="couponPromId" >
+        coupon_prom_id = #couponPromId#
+      </isNotNull>
+      <isNotNull prepend="," property="couponType" >
+        coupon_type = #couponType#
+      </isNotNull>
+      <isNotNull prepend="," property="orderQuota" >
+        order_quota = #orderQuota#
+      </isNotNull>
+      <isNotNull prepend="," property="couponAmount" >
+        coupon_amount = #couponAmount#
+      </isNotNull>
+      <isNotNull prepend="," property="couponState" >
+        coupon_state = #couponState#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn#
+      </isNotNull>
+      <isNotNull prepend="," property="orderId" >
+        order_id = #orderId#
+      </isNotNull>
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId#
+      </isNotNull>
+      <isNotNull prepend="," property="couponValidStarttime" >
+        coupon_valid_starttime = #couponValidStarttime#
+      </isNotNull>
+      <isNotNull prepend="," property="couponValidEndtime" >
+        coupon_valid_endtime = #couponValidEndtime#
+      </isNotNull>
+      <isNotNull prepend="," property="createTime" >
+        create_time = #createTime#
+      </isNotNull>
+      <isNotNull prepend="," property="updateTime" >
+        update_time = #updateTime#
+      </isNotNull>
+      <isNotNull prepend="," property="couponName" >
+        coupon_name = #couponName#
+      </isNotNull>
+      <isNotNull prepend="," property="couponRuleType" >
+        coupon_rule_type = #couponRuleType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="skuId" >
+        sku_id = #skuId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="bakFirst" >
+        bak_first = #bakFirst:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakSecond" >
+        bak_second = #bakSecond:INTEGER#
+      </isNotNull>
+    </dynamic>
+	  where coupon_id = #couponId# 
+  </update>
+  
+  <select id="countByTbCouponCondition" parameterClass="com.xindong.api.domain.query.TbCouponQuery" resultClass="java.lang.Integer" >
+    select count(1) from tb_coupon
+    <include refid="TbCoupon.TbCouponCondition" />
+  </select>
+  
+  <!-- 根据条件查询优惠券 -->
+  <select id="selectByTbCouponCondition" parameterClass="com.xindong.api.domain.query.TbCouponQuery" resultMap="TbCouponResult" >
+    select 
+    <include refid="TbCoupon.queryField" />
+    from tb_coupon
+    <include refid="TbCoupon.TbCouponCondition" />
+  </select>
+  
+  <select id="selectByTbCouponConditionForPage" parameterClass="com.xindong.api.domain.query.TbCouponQuery" resultMap="TbCouponResult" >
+    select 
+    <include refid="TbCoupon.queryField" />
+    from tb_coupon
+    <include refid="TbCoupon.TbCouponCondition" />
+    limit #start#,#pageSize#
+  </select>
+</sqlMap>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="activity" >
+  <resultMap id="ActivityResult" class="com.xindong.api.domain.Activity" >
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_intro" property="activityIntro" jdbcType="VARCHAR" />
+    <result column="activity_img_det" property="activityImgDet" jdbcType="VARCHAR" />
+    <result column="activity_img" property="activityImg" jdbcType="VARCHAR" />
+    <result column="activity_statu" property="activityStatu" jdbcType="INTEGER" />
+    <result column="activity_author" property="activityAuthor" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="activity_publish_date" property="activityPublishDate" jdbcType="TIMESTAMP" />
+    <result column="reply_num" property="replyNum" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="activity_desc" property="activityDesc" jdbcType="VARCHAR" />
+    <result column="useful_count" property="usefulCount" jdbcType="INTEGER" />
+    <result column="forword_count" property="forwordCount" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="INTEGER" />
+    <result column="activity_url" property="activityUrl" jdbcType="VARCHAR" />
+    <result column="bak_first" property="bakFirst" jdbcType="VARCHAR" />
+    <result column="bak_second" property="bakSecond" jdbcType="INTEGER" />
+    <result column="whether_coupon" property="whetherCoupon" jdbcType="INTEGER" />
+    <result column="coupon_promo_id" property="couponPromoId" jdbcType="INTEGER" />
+    <result column="rule_coupon" property="ruleCoupon" jdbcType="INTEGER" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	activity_id, activity_name, activity_intro,activity_img_det, activity_img, activity_statu,
+      activity_author, sort_num, activity_publish_date, reply_num, yn, created, modified
+      ,activity_desc, useful_count, forword_count, remark, activity_type, activity_url,bak_first, bak_second
+      ,whether_coupon, coupon_promo_id, rule_coupon
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ActivityResult" parameterClass="com.xindong.api.domain.Activity" >
+    select <include refid="activity.queryField" />
+    from activity
+    where activity_id = #activityId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.Activity" >
+    delete from activity
+    where activity_id = #activityId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.Activity" >
+    insert into activity ( activity_name, activity_intro, activity_img_det,activity_img, activity_statu,
+      activity_author, sort_num, activity_publish_date, reply_num, yn, created, modified
+      ,activity_desc, useful_count, forword_count, remark, activity_type, activity_url,bak_first, bak_second
+      ,whether_coupon, coupon_promo_id, rule_coupon)
+    values ( #activityName:VARCHAR#, #activityIntro:VARCHAR#,#activityImgDet:VARCHAR#, 
+      #activityImg:VARCHAR#, #activityStatu:INTEGER#, #activityAuthor:VARCHAR#, #sortNum:INTEGER#,
+      #activityPublishDate:TIMESTAMP#, #replyNum:INTEGER#,  1, now(), now()
+      , #activityDesc:VARCHAR#, #usefulCount:INTEGER#, #forwordCount:INTEGER#,#remark:VARCHAR#
+       , #activityType:INTEGER#,#activityUrl:VARCHAR#, #bakFirst:VARCHAR#, #bakSecond:INTEGER#
+       ,#whetherCoupon:INTEGER#, #couponPromoId:INTEGER#, #ruleCoupon:VARCHAR#)
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="activityId">
+			<![CDATA[SELECT @@IDENTITY AS activity_id ]]>
+	  </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.Activity" >
+    update activity
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="activityName" >
+        activity_name = #activityName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="activityIntro" >
+        activity_intro = #activityIntro:VARCHAR#
+      </isNotNull>
+       <isNotNull prepend="," property="activityImgDet" >
+        activity_img_det = #activityImgDet:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="activityImg" >
+        activity_img = #activityImg:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="activityStatu" >
+        activity_statu = #activityStatu:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="activityAuthor" >
+        activity_author = #activityAuthor:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNum" >
+        sort_num = #sortNum:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="activityPublishDate" >
+        activity_publish_date = #activityPublishDate:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="replyNum" >
+        reply_num = ifnull(reply_num,0)+#replyNum:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="activityDesc" >
+        activity_desc = #activityDesc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usefulCount" >
+        useful_count =ifnull(useful_count,0) + #usefulCount:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="forwordCount" >
+        forword_count =ifnull(forword_count,0) + #forwordCount:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="remark" >
+        remark = #remark:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="activityType" >
+        activity_type = #activityType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="activityUrl" >
+        activity_url = #activityUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakFirst" >
+        bak_first = #bakFirst:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakSecond" >
+        bak_second = #bakSecond:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="whetherCoupon" >
+        whether_coupon = #whetherCoupon:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="couponPromoId" >
+        coupon_promo_id = #couponPromoId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="ruleCoupon" >
+       	rule_coupon = #ruleCoupon:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where activity_id = #activityId:INTEGER#
+  </update>
+  
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="activityId" >
+        activity_id = #activityId:INTEGER#
+      </isNotNull>
+  	  <isNotNull prepend="and" property="activityName" >
+        activity_name = #activityName:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="activityIntro" >
+        activity_intro = #activityIntro:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="activityStatu" >
+        activity_statu = #activityStatu:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="activityAuthor" >
+        activity_author = #activityAuthor:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="sortNum" >
+        sort_num = #sortNum:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="activityPublishDate" >
+        activity_publish_date = #activityPublishDate:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="activityType" >
+        activity_type = #activityType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="whetherCoupon" >
+        whether_coupon = #whetherCoupon:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="couponPromoId" >
+        coupon_promo_id = #couponPromoId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="ruleCoupon" >
+       	rule_coupon = #ruleCoupon:VARCHAR#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  <select id="countByCondition" resultClass="java.lang.Integer" parameterClass="com.xindong.api.domain.query.ActivityQuery" >
+    select count(1)
+    from activity
+    <include refid="activity.condition" />
+  </select>
+  <select id="selectByConditionForPage" resultMap="ActivityResult" parameterClass="com.xindong.api.domain.query.ActivityQuery" >
+    select <include refid="activity.queryField" />
+    from activity
+   <include refid="activity.condition" />
+   order by sort_num 
+   limit #start#,#pageSize#
+  </select>
+  <select id="selectByCondition" resultMap="ActivityResult" parameterClass="com.xindong.api.domain.query.ActivityQuery" >
+    select <include refid="activity.queryField" />
+    from activity
+   <include refid="activity.condition" />
+   order by sort_num
+  </select>
+</sqlMap>

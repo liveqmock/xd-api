@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="system_constant_type" >
+  <resultMap id="SystemConstantTypeResult" class="com.xindong.api.domain.SystemConstantType" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="yn" property="yn" jdbcType="TINYINT" />
+    <result column="sort_num" property="sortNum" jdbcType="TINYINT" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	  id, name, value, description, yn, sort_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="SystemConstantTypeResult" parameterClass="com.xindong.api.domain.SystemConstantType" >
+    select <include refid="system_constant_type.queryField"/>
+    from system_constant_type
+    where id = #id:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.SystemConstantType" >
+    delete from system_constant_type
+    where id = #id:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.SystemConstantType" >
+    insert into system_constant_type (id, name, value, description, yn, sort_num)
+    values (#id:INTEGER#, #name:VARCHAR#, #value:VARCHAR#, #description:VARCHAR#, #yn:TINYINT#,
+      #sortNum:TINYINT#)
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.SystemConstantType" >
+    update system_constant_type
+    set name = #name:VARCHAR#,
+      value = #value:VARCHAR#,
+      description = #description:VARCHAR#,
+      yn = #yn:TINYINT#,
+      sort_num = #sortNum:TINYINT#
+    where id = #id:INTEGER#
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.xindong.api.domain.SystemConstantType" >
+    update system_constant_type
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="value" >
+        value = #value:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="description" >
+        description = #description:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:TINYINT#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNum" >
+        sort_num = #sortNum:TINYINT#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+      <isNotNull prepend="and" property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="description" >
+        description = #description:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="value" >
+        value = #value:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        yn = #yn:TINYINT#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  
+   <select id="selectByCondition" resultMap="SystemConstantTypeResult" parameterClass="com.xindong.api.domain.SystemConstantType" >
+    select <include refid="system_constant_type.queryField"/>
+    from system_constant_type
+    <include refid="system_constant_type.condition"/>
+  </select>
+</sqlMap>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user_balance" >
+  <resultMap id="UserBalanceResult" class="com.xindong.api.domain.UserBalance" >
+    <result column="balance_id" property="balanceId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="balance_sum" property="balanceSum" jdbcType="DECIMAL" />
+    <result column="locked_amount" property="lockedAmount" jdbcType="DECIMAL" />
+    <result column="used_amount" property="usedAmount" jdbcType="DECIMAL" />
+    <result column="overdue_amount" property="overdueAmount" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="balance_status" property="balanceStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	balance_id, user_id, balance_sum, locked_amount, used_amount, overdue_amount, created,
+      modified, remark, balance_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="UserBalanceResult" parameterClass="com.xindong.api.domain.UserBalance" >
+    select 
+        <include refid="user_balance.queryField" />
+    from user_balance
+    where balance_id = #balanceId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.UserBalance" >
+    delete from user_balance
+    where balance_id = #balanceId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.UserBalance" >
+    insert into user_balance (balance_id, user_id, balance_sum, locked_amount, used_amount,
+      overdue_amount, created, modified, remark, balance_status)
+    values (#balanceId:INTEGER#, #userId:INTEGER#, #balanceSum:DECIMAL#, #lockedAmount:DECIMAL#,
+      #usedAmount:DECIMAL#, #overdueAmount:DECIMAL#, now(),now(), #remark:VARCHAR#, 1)
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.UserBalance" >
+    update user_balance set  modified = now()
+    <dynamic>
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceSum" >
+        balance_sum = #balanceSum:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="lockedAmount" >
+        locked_amount = #lockedAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="usedAmount" >
+        used_amount = #usedAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="overdueAmount" >
+        overdue_amount = #overdueAmount:DECIMAL#
+      </isNotNull>
+       <isNotNull prepend="," property="remark" >
+        remark = #remark:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceStatus" >
+        balance_status = #balanceStatus:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where balance_id = #balanceId:INTEGER#
+  </update>
+  
+   <select id="selectByUserId" resultMap="UserBalanceResult" parameterClass="java.lang.Integer" >
+    select 
+        <include refid="user_balance.queryField" />
+    from user_balance
+    where  user_id = #userId:INTEGER#
+  </select>
+  <update id="updateByBalance" parameterClass="com.xindong.api.domain.UserBalance" >
+    update user_balance set  modified = now()
+    <dynamic>
+      <isNotNull prepend="," property="balanceSum" >
+        balance_sum = IFNULL(balance_sum,0) + #balanceSum:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="lockedAmount" >
+        locked_amount = IFNULL(locked_amount,0) +#lockedAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="usedAmount" >
+        used_amount = IFNULL(used_amount,0) + #usedAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="overdueAmount" >
+        overdue_amount =IFNULL(overdue_amount,0) + #overdueAmount:DECIMAL#
+      </isNotNull>
+       <isNotNull prepend="," property="remark" >
+        remark = #remark:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceStatus" >
+        balance_status = #balanceStatus:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where balance_id = #balanceId:INTEGER#
+  </update>
+  
+</sqlMap>

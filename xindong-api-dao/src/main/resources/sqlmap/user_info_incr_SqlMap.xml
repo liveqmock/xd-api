@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user_info_incr" >
+  <resultMap id="UserInfoIncrResult" class="com.xindong.api.domain.UserInfoIncr" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="head_imageUrl" property="headImageurl" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="from_where" property="fromWhere" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	 id, user_id, name, head_imageUrl, sex, from_where, yn, created, modified, type, openid,unionid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="UserInfoIncrResult" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    select <include refid="user_info_incr.queryField" />
+    from user_info_incr
+    where id = #id:INTEGER#
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    delete from user_info_incr
+    where id = #id:INTEGER#
+  </delete>
+
+  <insert id="insert" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    insert into user_info_incr (id, user_id, name, head_imageUrl, sex, from_where, yn, created,
+      modified, type, openid,unionid)
+    values (#id:INTEGER#, #userId:INTEGER#, #name:VARCHAR#, #headImageurl:VARCHAR#, #sex:INTEGER#,
+      #fromWhere:INTEGER#, #yn:INTEGER#, now(), now(), #type:INTEGER#,#openid:VARCHAR#,#unionid:VARCHAR#)
+       <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="id">
+			<![CDATA[SELECT @@IDENTITY AS id ]]>
+	  </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    update user_info_incr
+    set user_id = #userId:INTEGER#,
+      name = #name:VARCHAR#,
+      head_imageUrl = #headImageurl:VARCHAR#,
+      sex = #sex:INTEGER#,
+      from_where = #fromWhere:INTEGER#,
+      yn = #yn:INTEGER#,
+      created = #created:TIMESTAMP#,
+      modified = #modified:TIMESTAMP#,
+      type = #type:INTEGER#,
+      openid = #openid:VARCHAR#,
+      unionid = #unionid:VARCHAR#
+    where id = #id:INTEGER#
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    update user_info_incr
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="headImageurl" >
+        head_imageUrl = #headImageurl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sex" >
+        sex = #sex:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="fromWhere" >
+        from_where = #fromWhere:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="openid" >
+        openid = #openid:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="unionid" >
+        unionid = #unionid:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  
+   <!-- 查询条件 -->
+  <sql id="condition" >
+     where yn = 1
+  	<dynamic>
+  	   <isNotNull prepend="and" property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="fromWhere" >
+        from_where = #fromWhere:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="openid" >
+        openid = #openid:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="and" property="unionid" >
+        unionid = #unionid:VARCHAR#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  
+   <select id="selectByCondition" resultMap="UserInfoIncrResult" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    select <include refid="user_info_incr.queryField" />
+    from user_info_incr  <include refid="user_info_incr.condition" />
+  </select>
+  
+  <update id="updateByCondition" parameterClass="com.xindong.api.domain.UserInfoIncr" >
+    update user_info_incr
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="name" >
+        name = #name:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sex" >
+        sex = #sex:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="headImageurl" >
+        head_imageUrl = #headImageurl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="fromWhere" >
+        from_where = #fromWhere:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+    </dynamic>
+    where  unionid = #unionid:VARCHAR#  and   openid = #openid:VARCHAR#  
+  </update>
+</sqlMap>

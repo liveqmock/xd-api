@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMapConfig  PUBLIC "-//iBATIS.com//DTD SQL Map
+Config 2.0/" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+    <settings cacheModelsEnabled="false" enhancementEnabled="true"
+		lazyLoadingEnabled="false" errorTracingEnabled="true" maxRequests="1000"
+		maxSessions="300" maxTransactions="300" useStatementNamespaces="true"
+		defaultStatementTimeout="10"/>
+
+    <sqlMap resource="sqlmap/address_SqlMap.xml"/>
+    <sqlMap resource="sqlmap/category_SqlMap.xml"/>
+    <sqlMap resource="sqlmap/system_constant_value_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/system_constant_type_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/business_user_ext_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/activity_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/activity_reply_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/contact_group_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/index_image_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/item_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/item_description_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/item_image_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/item_tour_flag_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/opera_log_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/order_info_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/order_invoice_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/order_passenger_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/order_payment_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/order_remark_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/partner_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/passenger_group_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/payment_bindbankcard_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/payment_info_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/recommend_item_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/search_hot_keyword_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/sku_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/sms_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/supplier_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/sys_notice_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/tour_date_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/tour_destination_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/tour_flag_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/tour_origin_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/tour_subject_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/user_info_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/user_info_incr_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/operations_staff_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/itemAnalysisImage_SqlMap.xml"/>
+	<!-- 积分相关 -->
+	<sqlMap resource="sqlmap/user_balance_detail_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/user_balance_lock_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/user_balance_SqlMap.xml"/>
+
+	<sqlMap resource="sqlmap/ad_img_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/ad_info_SqlMap.xml"/>
+
+	<sqlMap resource="sqlmap/tb_coupon_promo_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/tb_coupon_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/comment_reply_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/comment_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/index_recommend_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/index_series_img_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/index_series_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/promotion_info_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/promotion_sku_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/user_collection_SqlMap.xml"/>
+	
+	<sqlMap resource="sqlmap/activityDetail_SqlMap.xml"/>
+	<sqlMap resource="sqlmap/item_video_SqlMap.xml"/>
+	
+</sqlMapConfig>

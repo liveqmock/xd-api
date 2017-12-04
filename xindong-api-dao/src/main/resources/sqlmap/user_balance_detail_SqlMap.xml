@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user_balance_detail" >
+  <resultMap id="UserBalanceDetailResult" class="com.xindong.api.domain.UserBalanceDetail" >
+    <result column="balance_detail_id" property="balanceDetailId" jdbcType="INTEGER" />
+    <result column="balance_id" property="balanceId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="balance_status" property="balanceStatus" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="balance_amount" property="balanceAmount" jdbcType="DECIMAL" />
+    <result column="balance_incre_amount" property="balanceIncreAmount" jdbcType="DECIMAL" />
+    <result column="balance_type" property="balanceType" jdbcType="TINYINT" />
+    <result column="grant_type" property="grantType" jdbcType="TINYINT" />
+    <result column="grant_time" property="grantTime" jdbcType="TIMESTAMP" />
+    <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="business_value" property="businessValue" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+   <!-- 查询字段 -->
+  <sql id="queryField">
+  	 balance_detail_id, balance_id, user_id, balance_status, order_id, balance_amount,
+      balance_incre_amount, balance_type, grant_type, grant_time, expire_time, created, modified, business_value, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="UserBalanceDetailResult" parameterClass="com.xindong.api.domain.UserBalanceDetail" >
+    select <include refid="user_balance_detail.queryField" />
+    from user_balance_detail
+    where balance_detail_id = #balanceDetailId:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.UserBalanceDetail" >
+    delete from user_balance_detail
+    where balance_detail_id = #balanceDetailId:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.UserBalanceDetail" >
+    insert into user_balance_detail (balance_detail_id, balance_id, user_id, balance_status,
+      order_id, balance_amount, balance_incre_amount, balance_type, grant_type, grant_time,
+      expire_time, created, modified, business_value, remark)
+    values (#balanceDetailId:INTEGER#, #balanceId:INTEGER#, #userId:INTEGER#,
+      #balanceStatus:INTEGER#, #orderId:INTEGER#, #balanceAmount:DECIMAL#,
+      #balanceIncreAmount:DECIMAL#, #balanceType:TINYINT#, #grantType:TINYINT#,
+      #grantTime:TIMESTAMP#, #expireTime:TIMESTAMP#, now(), now(),#businessValue:VARCHAR#, #remark:VARCHAR#)
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.UserBalanceDetail" >
+    update user_balance_detail set  modified = now()
+    <dynamic>
+      <isNotNull prepend="," property="balanceId" >
+        balance_id = #balanceId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="userId" >
+        user_id = #userId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceStatus" >
+        balance_status = #balanceStatus:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="orderId" >
+        order_id = #orderId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceAmount" >
+        balance_amount = #balanceAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceIncreAmount" >
+        balance_incre_amount = #balanceIncreAmount:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="balanceType" >
+        balance_type = #balanceType:TINYINT#
+      </isNotNull>
+      <isNotNull prepend="," property="grantType" >
+        grant_type = #grantType:TINYINT#
+      </isNotNull>
+      <isNotNull prepend="," property="grantTime" >
+        grant_time = #grantTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="expireTime" >
+        expire_time = #expireTime:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="businessValue" >
+        business_value = #businessValue:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="remark" >
+        remark = #remark:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where balance_detail_id = #balanceDetailId:INTEGER#
+  </update>
+  
+  
+  <!-- 根据条件查询所有信息数量 -->
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.UserBalanceDetailQuery" resultClass="java.lang.Integer" >
+    select count(1) from user_balance_detail 
+    where balance_status=0 and  user_id = #userId:INTEGER#
+  </select>
+  
+  <!-- 根据条件查询信息(分页) -->
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.UserBalanceDetailQuery" resultMap="UserBalanceDetailResult" >
+    select <include refid="user_balance_detail.queryField" />
+    from user_balance_detail  
+    where balance_status=0 and  user_id = #userId:INTEGER#
+    order by  grant_time desc
+  	limit #start#,#pageSize#
+  </select>
+</sqlMap>

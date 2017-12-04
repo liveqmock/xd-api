@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="activityDetail" >
+  <resultMap id="activityDetailResult" class="com.xindong.api.domain.ActivityDetail" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="skip_url" property="skipUrl" jdbcType="VARCHAR" />
+    <result column="travel_time" property="travelTime" jdbcType="TIMESTAMP" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="item_desc" property="itemDesc" jdbcType="VARCHAR" />
+    <result column="whether_coupon" property="whetherCoupon" jdbcType="INTEGER" />
+    <result column="coupon_promo_id" property="couponPromoId" jdbcType="INTEGER" />
+    <result column="rule_coupon" property="ruleCoupon" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="bak_first" property="bakFirst" jdbcType="VARCHAR" />
+    <result column="bak_second" property="bakSecond" jdbcType="INTEGER" />
+  </resultMap>
+
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="id" >
+  	   id = #id:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="activityId" >
+  	   activity_id = #activityId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="imgUrl" >
+  	   img_url = #imgUrl:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="skipUrl" >
+  	   skip_url = #skipUrl:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="travelTime" >
+  	   travel_time = #travelTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="itemName" >
+  	   item_name = #itemName:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="itemDesc" >
+  	   item_desc = #itemDesc:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="whetherCoupon" >
+  	   whether_coupon = #whetherCoupon:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponPromoId" >
+  	   coupon_promo_id = #couponPromoId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="ruleCoupon" >
+  	   rule_coupon = #ruleCoupon:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="sortNum" >
+  	   sort_num = #sortNum:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="yn" >
+  	   yn = #yn:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="created" >
+  	   created = #created:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="modified" >
+  	   modified = #modified:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="bakFirst" >
+  	   bak_first = #bakFirst:VARCHAR#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="bakSecond" >
+  	   bak_second = #bakSecond:INTEGER#
+  	  </isNotNull>
+  	 </dynamic>
+  </sql>
+
+  <!-- 依据主键进行查询 -->
+  <select id="selectByPrimaryKey" resultMap="activityDetailResult" parameterClass="java.lang.Integer" >
+    select 
+    id,activity_id,img_url,skip_url,travel_time,item_name,item_desc,whether_coupon,coupon_promo_id,rule_coupon,sort_num,yn,created,modified,bak_first,bak_second
+    from activity_detail
+    where id = #id#
+  </select>
+
+  <!-- 添加信息 -->
+  <insert id="insert" parameterClass="com.xindong.api.domain.ActivityDetail" >
+    insert into activity_detail (
+    activity_id,img_url,skip_url,travel_time,item_name,item_desc,whether_coupon,coupon_promo_id,rule_coupon,sort_num,yn,created,modified,bak_first,bak_second
+    ) values(
+    #activityId#,#imgUrl#,#skipUrl#,#travelTime#,#itemName#,#itemDesc#,#whetherCoupon#,#couponPromoId#,#ruleCoupon#,#sortNum#,#yn#,#created#,#modified#,#bakFirst#,#bakSecond#
+    )
+    <selectKey resultClass="java.lang.Integer" keyProperty="id">
+      <![CDATA[SELECT @@IDENTITY AS id ]]>
+    </selectKey>
+  </insert>
+
+  <!-- 依据主键进行修改 -->
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.ActivityDetail" >
+    update activity_detail set id = id
+    <dynamic>
+      <isNotNull prepend="," property="activityId" >
+        activity_id = #activityId#
+      </isNotNull>
+      <isNotNull prepend="," property="imgUrl" >
+        img_url = #imgUrl#
+      </isNotNull>
+      <isNotNull prepend="," property="skipUrl" >
+        skip_url = #skipUrl#
+      </isNotNull>
+      <isNotNull prepend="," property="travelTime" >
+        travel_time = #travelTime#
+      </isNotNull>
+      <isNotNull prepend="," property="itemName" >
+        item_name = #itemName#
+      </isNotNull>
+      <isNotNull prepend="," property="itemDesc" >
+        item_desc = #itemDesc#
+      </isNotNull>
+      <isNotNull prepend="," property="whetherCoupon" >
+        whether_coupon = #whetherCoupon#
+      </isNotNull>
+      <isNotNull prepend="," property="couponPromoId" >
+        coupon_promo_id = #couponPromoId#
+      </isNotNull>
+      <isNotNull prepend="," property="ruleCoupon" >
+        rule_coupon = #ruleCoupon#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNum" >
+        sort_num = #sortNum#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified#
+      </isNotNull>
+      <isNotNull prepend="," property="bakFirst" >
+        bak_first = #bakFirst#
+      </isNotNull>
+      <isNotNull prepend="," property="bakSecond" >
+        bak_second = #bakSecond#
+      </isNotNull>
+    </dynamic>
+	  where id = #id# 
+  </update>
+
+  <!-- 条件查询总数 -->
+  <select id="countByCondition" parameterClass="com.xindong.api.domain.query.ActivityDetailQuery" resultClass="java.lang.Integer" >
+    select count(1) from activity_detail
+    <include refid="activityDetail.condition" />
+  </select>
+
+  <!-- 条件查询列表 -->
+  <select id="selectByCondition" parameterClass="com.xindong.api.domain.query.ActivityDetailQuery" resultMap="activityDetailResult" >
+    select 
+    id,activity_id,img_url,skip_url,travel_time,item_name,item_desc,whether_coupon,coupon_promo_id,rule_coupon,sort_num,yn,created,modified,bak_first,bak_second
+    from activity_detail
+    <include refid="activityDetail.condition" />
+    order by sort_num asc
+  </select>
+
+  <!-- 分页条件查询列表 -->
+  <select id="selectByConditionForPage" parameterClass="com.xindong.api.domain.query.ActivityDetailQuery" resultMap="activityDetailResult" >
+    select 
+    id,activity_id,img_url,skip_url,travel_time,item_name,item_desc,whether_coupon,coupon_promo_id,rule_coupon,sort_num,yn,created,modified,bak_first,bak_second
+    from activity_detail
+    <include refid="activityDetail.condition" />
+    order by sort_num
+    limit #start#,#pageSize#
+  </select>
+</sqlMap>

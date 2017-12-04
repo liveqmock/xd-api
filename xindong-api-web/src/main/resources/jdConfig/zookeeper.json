@@ -1,0 +1,8 @@
+{
+	//'zkConfigs': '127.0.0.1:2181',
+	'zkConfigs': '192.168.200.216:2181,192.168.200.216:2182,192.168.200.216:2183',
+	'zkCheckInterval': 30000,
+	'environment':'development',
+	'updateAck':true,
+	'localPath':'/export/data/tomcatRoot/vip.360buy.com/vip'
+}

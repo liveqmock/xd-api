@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="index_series_img" >
+  <resultMap id="IndexSeriesImgResult" class="com.xindong.api.domain.IndexSeriesImg" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="series_id" property="seriesId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="bak_first" property="bakFirst" jdbcType="VARCHAR" />
+    <result column="bak_second" property="bakSecond" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <!-- 查询字段 -->
+  <sql id="queryField">
+     id, series_id, type, sort_num, item_id, img_url, link_url, intro, bak_first, bak_second,
+      yn, created, modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="IndexSeriesImgResult" parameterClass="com.xindong.api.domain.IndexSeriesImg" >
+    select <include refid="index_series_img.queryField" />
+    from index_series_img
+    where id = #id:INTEGER#
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.IndexSeriesImg" >
+    delete from index_series_img
+    where id = #id:INTEGER#
+  </delete>
+  
+  <insert id="insert" parameterClass="com.xindong.api.domain.IndexSeriesImg" >
+    insert into index_series_img ( series_id, type, sort_num, item_id, img_url, link_url, intro,
+      bak_first, bak_second, yn, created, modified)
+    values (#seriesId:INTEGER#, #type:INTEGER#, #sortNum:INTEGER#, #itemId:INTEGER#,
+      #imgUrl:VARCHAR#, #linkUrl:VARCHAR#, #intro:VARCHAR#, #bakFirst:VARCHAR#, #bakSecond:INTEGER#,
+       1, now(), now())
+      <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="id">
+			<![CDATA[SELECT @@IDENTITY AS id ]]>
+	  </selectKey>
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.IndexSeriesImg" >
+    update index_series_img
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="seriesId" >
+        series_id = #seriesId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="sortNum" >
+        sort_num = #sortNum:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="imgUrl" >
+        img_url = #imgUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="linkUrl" >
+        link_url = #linkUrl:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="intro" >
+        intro = #intro:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakFirst" >
+        bak_first = #bakFirst:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakSecond" >
+        bak_second = #bakSecond:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="created" >
+        created = #created:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="modified" >
+        modified = #modified:TIMESTAMP#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  
+  <!-- 查询条件 -->
+  <sql id="condition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="id" >
+        id = #id:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="yn" >
+        yn = #yn:INTEGER#
+      </isNotNull>
+       <isNotNull prepend="and" property="seriesId" >
+        series_id = #seriesId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="and" property="type" >
+        type = #type:INTEGER#
+      </isNotNull>
+    </dynamic>
+  </sql>
+  
+  <select id="selectByCondition" resultMap="IndexSeriesImgResult" parameterClass="com.xindong.api.domain.IndexSeriesImg" >
+    select <include refid="index_series_img.queryField" />
+    from index_series_img
+    <include refid="index_series_img.condition" />
+    order by item_id desc
+  </select>
+</sqlMap>

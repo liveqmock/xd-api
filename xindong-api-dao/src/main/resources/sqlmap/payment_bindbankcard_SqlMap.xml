@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="payment_bindbankcard" >
+  <resultMap id="PaymentBindbankcardResult" class="com.xindong.api.domain.PaymentBindbankcard" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="mer_cust_id" property="merCustId" jdbcType="VARCHAR" />
+    <result column="vender_user_id" property="venderUserId" jdbcType="VARCHAR" />
+    <result column="usr_busi_agreement_id" property="usrBusiAgreementId" jdbcType="VARCHAR" />
+    <result column="usr_pay_agreement_id" property="usrPayAgreementId" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bank_ac" property="bankAc" jdbcType="VARCHAR" />
+    <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="branch_ac" property="branchAc" jdbcType="VARCHAR" />
+    <result column="bank_ac_last4" property="bankAcLast4" jdbcType="VARCHAR" />
+    <result column="branch_ac_last4" property="branchAcLast4" jdbcType="VARCHAR" />
+    <result column="identitytype" property="identitytype" jdbcType="VARCHAR" />
+    <result column="identitycode" property="identitycode" jdbcType="VARCHAR" />
+    <result column="cardholder" property="cardholder" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <sql id="queryField">
+  	 id, mer_cust_id, vender_user_id, usr_busi_agreement_id, usr_pay_agreement_id, mobile,
+      bank, bank_ac, branch, branch_ac, bank_ac_last4, branch_ac_last4, identitytype, identitycode,
+      cardholder, create_date, update_date
+   </sql>
+  <select id="selectByPrimaryKey" resultMap="PaymentBindbankcardResult" parameterClass="com.xindong.api.domain.PaymentBindbankcard" >
+    select <include refid="payment_bindbankcard.queryField" /> 
+    from payment_bindbankcard
+    where id = #id:INTEGER#
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.xindong.api.domain.PaymentBindbankcard" >
+    delete from payment_bindbankcard
+    where id = #id:INTEGER#
+  </delete>
+  <insert id="insert" parameterClass="com.xindong.api.domain.PaymentBindbankcard" >
+    insert into payment_bindbankcard ( mer_cust_id, vender_user_id, usr_busi_agreement_id,
+      usr_pay_agreement_id, mobile, bank, bank_ac, branch, branch_ac, bank_ac_last4,
+      branch_ac_last4, identitytype, identitycode, cardholder, create_date, update_date)
+    values (#merCustId:VARCHAR#, #venderUserId:VARCHAR#, #usrBusiAgreementId:VARCHAR#,
+      #usrPayAgreementId:VARCHAR#, #mobile:VARCHAR#, #bank:VARCHAR#, #bankAc:VARCHAR#,
+      #branch:VARCHAR#, #branchAc:VARCHAR#, #bankAcLast4:VARCHAR#, #branchAcLast4:VARCHAR#,
+      #identitytype:VARCHAR#, #identitycode:VARCHAR#, #cardholder:VARCHAR#,now(), now())
+        <!-- 返回自增主键 -->
+      <selectKey resultClass="java.lang.Integer" keyProperty="id">
+			<![CDATA[SELECT @@IDENTITY AS id ]]>
+	  </selectKey>
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.PaymentBindbankcard" >
+    update payment_bindbankcard
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="merCustId" >
+        mer_cust_id = #merCustId:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="venderUserId" >
+        vender_user_id = #venderUserId:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usrBusiAgreementId" >
+        usr_busi_agreement_id = #usrBusiAgreementId:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usrPayAgreementId" >
+        usr_pay_agreement_id = #usrPayAgreementId:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="mobile" >
+        mobile = #mobile:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bank" >
+        bank = #bank:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bankAc" >
+        bank_ac = #bankAc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="branch" >
+        branch = #branch:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="branchAc" >
+        branch_ac = #branchAc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bankAcLast4" >
+        bank_ac_last4 = #bankAcLast4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="branchAcLast4" >
+        branch_ac_last4 = #branchAcLast4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="identitytype" >
+        identitytype = #identitytype:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="identitycode" >
+        identitycode = #identitycode:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="cardholder" >
+        cardholder = #cardholder:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="createDate" >
+        create_date = #createDate:TIMESTAMP#
+      </isNotNull>
+      <isNotNull prepend="," property="updateDate" >
+        update_date = #updateDate:TIMESTAMP#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  
+</sqlMap>

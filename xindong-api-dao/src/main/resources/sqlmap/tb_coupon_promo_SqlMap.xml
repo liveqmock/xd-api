@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="TbCouponPromo" >
+  <resultMap id="TbCouponPromoResult" class="com.xindong.api.domain.TbCouponPromo" >
+    <result column="coupon_promo_id" property="couponPromoId" jdbcType="INTEGER" />
+    <result column="coupon_promo_code" property="couponPromoCode" jdbcType="VARCHAR" />
+    <result column="coupon_type" property="couponType" jdbcType="INTEGER" />
+    <result column="coupon_batch" property="couponBatch" jdbcType="VARCHAR" />
+    <result column="coupon_promo_name" property="couponPromoName" jdbcType="VARCHAR" />
+    <result column="coupon_business_type" property="couponBusinessType" jdbcType="INTEGER" />
+    <result column="coupon_apply_amount" property="couponApplyAmount" jdbcType="INTEGER" />
+    <result column="coupon_grant_amount" property="couponGrantAmount" jdbcType="INTEGER" />
+    <result column="coupon_valid_type" property="couponValidType" jdbcType="INTEGER" />
+    <result column="coupon_valid_starttime" property="couponValidStarttime" jdbcType="TIMESTAMP" />
+    <result column="coupon_valid_endtime" property="couponValidEndtime" jdbcType="TIMESTAMP" />
+    <result column="coupon_valid_days" property="couponValidDays" jdbcType="INTEGER" />
+    <result column="promo_starttime" property="promoStarttime" jdbcType="TIMESTAMP" />
+    <result column="promo_endtime" property="promoEndtime" jdbcType="TIMESTAMP" />
+    <result column="coupon_promo_state" property="couponPromoState" jdbcType="INTEGER" />
+    <result column="opera" property="opera" jdbcType="VARCHAR" />
+    <result column="opera_time" property="operaTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="apply_user_name" property="applyUserName" jdbcType="VARCHAR" />
+    <result column="apply_department_name" property="applyDepartmentName" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_used_amount" property="couponUsedAmount" jdbcType="INTEGER" />
+    <result column="order_quota" property="orderQuota" jdbcType="INTEGER" />
+    <result column="coupon_amount" property="couponAmount" jdbcType="INTEGER" />
+    <result column="grant_delay_days" property="grantDelayDays" jdbcType="INTEGER" />
+    <result column="limit_condition" property="limitCondition" jdbcType="INTEGER" />
+    <result column="yn" property="yn" jdbcType="INTEGER" />
+    <result column="coupon_rule_type" property="couponRuleType" jdbcType="INTEGER" />
+    <result column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="bak_first" property="bakFirst" jdbcType="VARCHAR" />
+    <result column="bak_second" property="bakSecond" jdbcType="INTEGER" />
+    <result column="amount_random" property="amountRandom" jdbcType="INTEGER" />
+    <result column="coupon_amount_min" property="couponAmountMin" jdbcType="INTEGER" />
+    <result column="coupon_rule_content" property="couponRuleContent" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 查询字段 -->
+  <sql id="queryField">
+  	coupon_promo_id,coupon_promo_code,coupon_type,coupon_batch,coupon_promo_name,coupon_business_type,
+    coupon_apply_amount,coupon_grant_amount,coupon_valid_type,coupon_valid_starttime,coupon_valid_endtime
+    ,coupon_valid_days,promo_starttime,promo_endtime,coupon_promo_state,opera,opera_time,
+    create_time,update_time,apply_user_name,apply_department_name,apply_time,coupon_used_amount
+    ,order_quota,coupon_amount,grant_delay_days,limit_condition,yn,coupon_rule_type, sku_id, item_id, bak_first, bak_second,
+    amount_random,coupon_amount_min,coupon_rule_content
+  </sql>
+  
+  <sql id="TbCouponPromoCondition" >
+  	<dynamic prepend="where" >
+  	  <isNotNull prepend="and" property="couponPromoId" >
+  	   coupon_promo_id = #couponPromoId:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponPromoCode" >
+  	   coupon_promo_code like CONCAT('%', #couponPromoCode:VARCHAR#, '%') 
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponType" >
+  	   coupon_type = #couponType:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponBatch" >
+  	   coupon_batch like CONCAT('%', #couponBatch:VARCHAR#, '%') 
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponPromoName" >
+  	   coupon_promo_name like CONCAT('%', #couponPromoName:VARCHAR#, '%')
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponBusinessType" >
+  	   coupon_business_type = #couponBusinessType:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponApplyAmount" >
+  	   coupon_apply_amount = #couponApplyAmount:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponGrantAmount" >
+  	   coupon_grant_amount = #couponGrantAmount:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponValidType" >
+  	   coupon_valid_type = #couponValidType:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponValidStarttime" >
+  	   coupon_valid_starttime = #couponValidStarttime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponValidEndtime" >
+  	   coupon_valid_endtime = #couponValidEndtime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponValidDays" >
+  	   coupon_valid_days = #couponValidDays:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="promoStarttime" >
+  	  	<![CDATA[
+ 			promo_starttime <= #promoStarttime:TIMESTAMP#
+		]]>
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="promoEndtime" >
+  	  	<![CDATA[
+ 			promo_endtime >= #promoEndtime:TIMESTAMP#
+		]]>
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponPromoState" >
+  	   coupon_promo_state = #couponPromoState:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="opera" >
+  	   opera like CONCAT('%', #opera:INTEGER#, '%')
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="operaTime" >
+  	   opera_time = #operaTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="createTime" >
+  	   create_time = #createTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="updateTime" >
+  	   update_time = #updateTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="applyUserName" >
+  	   apply_user_name like CONCAT('%', #applyUserName:INTEGER#, '%')
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="applyDepartmentName" >
+  	   apply_department_name like CONCAT('%', #applyDepartmentName:INTEGER#, '%')
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="applyTime" >
+  	   apply_time = #applyTime:TIMESTAMP#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponUsedAmount" >
+  	   coupon_used_amount = #couponUsedAmount:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="orderQuota" >
+  	   order_quota = #orderQuota:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponAmount" >
+  	   coupon_amount = #couponAmount:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="grantDelayDays" >
+  	   grant_delay_days = #grantDelayDays:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="limitCondition" >
+  	   limit_condition = #limitCondition:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="yn" >
+  	   yn = #yn:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="applyTimeStart" >
+        <![CDATA[
+ 			apply_time > #applyTimeStart:TIMESTAMP#
+		]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="applyTimeEnd" >
+        <![CDATA[
+ 			apply_time < #applyTimeEnd:TIMESTAMP#
+		]]>
+      </isNotNull>
+      <isNotNull prepend="and" property="couponAmountMin" >
+  	   coupon_amount_min = #couponAmountMin:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="amountRandom" >
+  	   amount_random = #amountRandom:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="couponRuleType" >
+  	   coupon_rule_type = #couponRuleType:INTEGER#
+  	  </isNotNull>
+  	  <isNotNull prepend="and" property="bakFirst" >
+  	   bak_first like CONCAT('%', #bakFirst:VARCHAR#, '%') 
+  	  </isNotNull>
+  	 </dynamic>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="TbCouponPromoResult" parameterClass="java.lang.Integer" >
+    select 
+    <include refid="TbCouponPromo.queryField" />
+    from tb_coupon_promo
+    where coupon_promo_id = #couponPromoId#
+  </select>
+  
+  <update id="updateByPrimaryKey" parameterClass="com.xindong.api.domain.TbCouponPromo" >
+    update tb_coupon_promo set coupon_promo_id = coupon_promo_id,update_time = now()
+    <dynamic>
+      <isNotNull prepend="," property="couponPromoCode" >
+        coupon_promo_code = #couponPromoCode#
+      </isNotNull>
+      <isNotNull prepend="," property="couponType" >
+        coupon_type = #couponType#
+      </isNotNull>
+      <isNotNull prepend="," property="couponBatch" >
+        coupon_batch = #couponBatch#
+      </isNotNull>
+      <isNotNull prepend="," property="couponPromoName" >
+        coupon_promo_name = #couponPromoName#
+      </isNotNull>
+      <isNotNull prepend="," property="couponBusinessType" >
+        coupon_business_type = #couponBusinessType#
+      </isNotNull>
+      <isNotNull prepend="," property="couponApplyAmount" >
+        coupon_apply_amount = #couponApplyAmount#
+      </isNotNull>
+      <isNotNull prepend="," property="couponGrantAmount" >
+        coupon_grant_amount = coupon_grant_amount + #couponGrantAmount#
+      </isNotNull>
+      <isNotNull prepend="," property="couponValidType" >
+        coupon_valid_type = #couponValidType#
+      </isNotNull>
+      <isNotNull prepend="," property="couponValidStarttime" >
+        coupon_valid_starttime = #couponValidStarttime#
+      </isNotNull>
+      <isNotNull prepend="," property="couponValidEndtime" >
+        coupon_valid_endtime = #couponValidEndtime#
+      </isNotNull>
+      <isNotNull prepend="," property="couponValidDays" >
+        coupon_valid_days = #couponValidDays#
+      </isNotNull>
+      <isNotNull prepend="," property="promoStarttime" >
+        promo_starttime = #promoStarttime#
+      </isNotNull>
+      <isNotNull prepend="," property="promoEndtime" >
+        promo_endtime = #promoEndtime#
+      </isNotNull>
+      <isNotNull prepend="," property="couponPromoState" >
+        coupon_promo_state = #couponPromoState#
+      </isNotNull>
+      <isNotNull prepend="," property="opera" >
+        opera = #opera#
+      </isNotNull>
+      <isNotNull prepend="," property="operaTime" >
+        opera_time = #operaTime#
+      </isNotNull>
+      <isNotNull prepend="," property="createTime" >
+        create_time = #createTime#
+      </isNotNull>
+      <isNotNull prepend="," property="applyUserName" >
+        apply_user_name = #applyUserName#
+      </isNotNull>
+      <isNotNull prepend="," property="applyDepartmentName" >
+        apply_department_name = #applyDepartmentName#
+      </isNotNull>
+      <isNotNull prepend="," property="applyTime" >
+        apply_time = #applyTime#
+      </isNotNull>
+      <isNotNull prepend="," property="couponUsedAmount" >
+        coupon_used_amount = #couponUsedAmount#
+      </isNotNull>
+      <isNotNull prepend="," property="orderQuota" >
+        order_quota = #orderQuota#
+      </isNotNull>
+      <isNotNull prepend="," property="couponAmount" >
+        coupon_amount = #couponAmount#
+      </isNotNull>
+      <isNotNull prepend="," property="grantDelayDays" >
+        grant_delay_days = #grantDelayDays#
+      </isNotNull>
+      <isNotNull prepend="," property="limitCondition" >
+        limit_condition = #limitCondition#
+      </isNotNull>
+      <isNotNull prepend="," property="yn" >
+        yn = #yn#
+      </isNotNull>
+       <isNotNull prepend="," property="couponRuleType" >
+        coupon_rule_type = #couponRuleType:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="skuId" >
+        sku_id = #skuId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="itemId" >
+        item_id = #itemId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="bakFirst" >
+        bak_first = #bakFirst:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="bakSecond" >
+        bak_second = #bakSecond:INTEGER#
+      </isNotNull>
+    </dynamic>
+	  where coupon_promo_id = #couponPromoId# 
+  </update>
+  
+  <select id="countByTbCouponPromoCondition" parameterClass="com.xindong.api.domain.query.TbCouponPromoQuery" resultClass="java.lang.Integer" >
+    select count(1) from tb_coupon_promo
+     <include refid="TbCouponPromo.TbCouponPromoCondition" />
+  </select>
+  
+  <select id="selectByTbCouponPromoCondition" parameterClass="com.xindong.api.domain.query.TbCouponPromoQuery" resultMap="TbCouponPromoResult" >
+    select  <include refid="TbCouponPromo.queryField" />
+    from tb_coupon_promo
+    <include refid="TbCouponPromo.TbCouponPromoCondition" />
+  </select>
+  
+  <select id="selectByTbCouponPromoConditionForPage" parameterClass="com.xindong.api.domain.query.TbCouponPromoQuery" resultMap="TbCouponPromoResult" >
+    select  <include refid="TbCouponPromo.queryField" />
+    from tb_coupon_promo
+    <include refid="TbCouponPromo.TbCouponPromoCondition" />
+    limit #start#,#pageSize#
+  </select>
+</sqlMap>
